@@ -32,4 +32,43 @@ public class CalculatorFunctions {
 
 		return output;
 	}
+	
+	public static double xExpY(double x, double y) {
+		// x and y are both real numbers  
+		// 1. special case when x = 0 
+		if(x == 0)
+		{
+			// 1. if y <= 0
+			if(y == 0 || y < 0)
+			{
+				System.out.println("Math Error!");
+				return(-0.9999999999);//for now the value returned is just to indicate error
+			}
+			// 2. if y > 0
+			if(y > 0)
+			{
+				return 0.0;
+			}
+		}
+		//2. if x is a negative real number or positive real number
+		else if(x > 0 || x < 0)
+		{
+			if(y == 0)// exponential is zero always return 1.0
+			{
+				return 1.0;
+			}
+			//don't know if we could use Math lib directly
+			if(y > 0)// exponential is greater than zero, use Math.pow() to return a value
+			{
+				return Math.pow(x, y);
+			}
+			if(y < 0)// exponential is less than zero, use Math.pow() then inverse the result
+			{
+				return(1/(Math.pow(x, y)));
+			}
+		}
+	
+		return(-0.9999999999);
+		
+	}
 }
