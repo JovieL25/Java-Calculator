@@ -4,7 +4,38 @@ public class CalculatorFunctions {
 	private static int maxIterations = 200; // Increase for higher precision outputs
 	private static final double accuracy = 0.00001;
 	public static final double e = 2.718281828459;
-
+	
+	//basic functions
+	//positive integer power function
+	public static double posPow(double x, double p) {
+		if(p == 0) {
+			return 1.0;
+		}
+		if(p < 0) {
+			return 0.9999999999;//for now the number represents N/A
+		}
+		double result = 1.0;
+		for(int i = 0; i < p; i++) {
+			result = result * x;
+		}
+		return result;
+	}
+	//factorial function x! (by definition of factorial x can only be positive integer or 0)
+	public static int factorial(int x)
+	{
+		if(x > 0) {
+			int result = 1;
+			for(int i = x; i > 0; i--) {
+				result = result * i;
+			}
+			return result;
+		}
+		if(x == 0) {
+			return 1;
+		}
+		return 0;
+	}
+	
 	public static double ln(double arg) {
 
 		double output = 0;
@@ -33,7 +64,21 @@ public class CalculatorFunctions {
 		return output;
 	}
 	
-	public static double xExpY(double x, double y) {
+	//parameter x : x represents the exponential of e^x
+	public static double exp(double x)
+	{
+		//the idea behind the exp( ) function is Taylor series
+		//formula: sum(from n = 0 to n = +inf) x^n/n!
+		//Since the program could not go literally to infinity, limit the maximum iteration to 100
+		double result = 0.0;
+		for(int i = 0; i < 13; i++) {
+			result += (CalculatorFunctions.posPow(x, i))/(CalculatorFunctions.factorial(i));
+		}
+		return result;
+		
+	}
+	
+	public static double xPowY(double x, double y) {
 		// x and y are both real numbers  
 		// 1. special case when x = 0 
 		if(x == 0)
@@ -57,14 +102,14 @@ public class CalculatorFunctions {
 			{
 				return 1.0;
 			}
-			//don't know if we could use Math lib directly
-			if(y > 0)// exponential is greater than zero, use Math.pow() to return a value
+			else
 			{
-				return Math.pow(x, y);
-			}
-			if(y < 0)// exponential is less than zero, use Math.pow() then inverse the result
-			{
-				return(1/(Math.pow(x, y)));
+				double result = 0.0;
+				//calculate y * ln(x)
+				double temp = y * CalculatorFunctions.ln(x);
+				result = CalculatorFunctions.exp(temp);
+				return result;
+				//return Math.pow(x, y);
 			}
 		}
 	
