@@ -21,17 +21,17 @@ public class CalculatorFunctions {
 		return result;
 	}
 	//factorial function x! (by definition of factorial x can only be positive integer or 0)
-	public static int factorial(int x)
+	public static double factorial(int x)
 	{
 		if(x > 0) {
-			int result = 1;
-			for(int i = x; i > 0; i--) {
+			double result = 1;
+			for(int i = 1; i <= x; i++) {
 				result = result * i;
 			}
 			return result;
 		}
 		if(x == 0) {
-			return 1;
+			return 1.0;
 		}
 		return 0;
 	}
@@ -71,7 +71,7 @@ public class CalculatorFunctions {
 		//formula: sum(from n = 0 to n = +inf) x^n/n!
 		//Since the program could not go literally to infinity, limit the maximum iteration to 100
 		double result = 0.0;
-		for(int i = 0; i < 13; i++) {
+		for(int i = 0; i < 150; i++) {
 			result += (CalculatorFunctions.posPow(x, i))/(CalculatorFunctions.factorial(i));
 		}
 		return result;
@@ -115,5 +115,17 @@ public class CalculatorFunctions {
 	
 		return(-0.9999999999);
 		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double result = CalculatorFunctions.xPowY(10, 15);
+		
+		
+		System.out.println(result);
+		
+		System.out.println(Math.pow(5.1, 2));
 	}
 }
