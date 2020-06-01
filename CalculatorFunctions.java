@@ -4,38 +4,14 @@ public class CalculatorFunctions {
 	private static int maxIterations = 200; // Increase for higher precision outputs
 	private static final double accuracy = 0.00001;
 	public static final double e = 2.718281828459;
-	
-	//basic functions
-	//positive integer power function
-	public static double posPow(double x, double p) {
-		if(p == 0) {
-			return 1.0;
+
+	public static double abs(double arg) {
+		double output = arg;
+		if(arg < 0) {
+			return -output;
 		}
-		if(p < 0) {
-			return 0.9999999999;//for now the number represents N/A
-		}
-		double result = 1.0;
-		for(int i = 0; i < p; i++) {
-			result = result * x;
-		}
-		return result;
+		return output;
 	}
-	//factorial function x! (by definition of factorial x can only be positive integer or 0)
-	public static double factorial(int x)
-	{
-		if(x > 0) {
-			double result = 1;
-			for(int i = 1; i <= x; i++) {
-				result = result * i;
-			}
-			return result;
-		}
-		if(x == 0) {
-			return 1.0;
-		}
-		return 0;
-	}
-	
 	public static double ln(double arg) {
 
 		double output = 0;
@@ -47,22 +23,61 @@ public class CalculatorFunctions {
 		double curValue = arg - 1;
 		if (arg < 1) {
 			int i = 1;
-			//Converge the Taylor series until we hit our desired accuracy or we hit a max number of iterations
-			while (Math.abs(Math.abs(realValue) - Math.abs(output)) >= accuracy || i == maxIterations) {
+			// Converge the Taylor series until we hit our desired accuracy or we hit a max number of iterations
+			while (CalculatorFunctions.abs(CalculatorFunctions.abs(realValue) - CalculatorFunctions.abs(output)) >= accuracy || i == maxIterations) {
+				// change Math.pow to our own pow function
 				output += Math.pow(-1, (i + 1) % 2) * curValue / i;
 				curValue *= arg - 1;
 				i++;
-				System.out.println(i);
 			}
 		} else if (arg == 1) {
 			output = 0;
-			// For values > 1 use a trapezoidal sum
 		} else if (arg > 1) {
-			output = Math.log(arg);
+			if (arg == e) {
+				return 1;
+			}
+			double i = 1;
+			double base = (arg - 1) / arg;
+			// Taylor series expansion of ln(x) centered at x > 1/2
+			while (CalculatorFunctions.abs(CalculatorFunctions.abs(realValue) - CalculatorFunctions.abs(output)) >= accuracy || i == maxIterations) {
+				// change Math.pow to our own pow function
+				output += Math.pow(base, i) / i;
+				i++;
+			}
 		}
-
 		return output;
 	}
+	
+	//basic functions
+		//positive integer power function
+		public static double posPow(double x, double p) {
+			if(p == 0) {
+				return 1.0;
+			}
+			if(p < 0) {
+				return 0.9999999999;//for now the number represents N/A
+			}
+			double result = 1.0;
+			for(int i = 0; i < p; i++) {
+				result = result * x;
+			}
+			return result;
+		}
+		//factorial function x! (by definition of factorial x can only be positive integer or 0)
+		public static double factorial(int x)
+		{
+			if(x > 0) {
+				double result = 1;
+				for(int i = 1; i <= x; i++) {
+					result = result * i;
+				}
+				return result;
+			}
+			if(x == 0) {
+				return 1.0;
+			}
+			return 0;
+		}
 	
 	//parameter x : x represents the exponential of e^x
 	public static double exp(double x)
