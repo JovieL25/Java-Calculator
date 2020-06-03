@@ -4,7 +4,6 @@ import java.lang.Math;
 public class CalculatorInterface {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println(CalculatorFunctions.ln(0.1));
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
