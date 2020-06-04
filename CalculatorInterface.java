@@ -1,19 +1,19 @@
+package project;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eternity_V_1.ten_to_x;
-
 public class CalculatorInterface {
 
 	public static void main(String[] args) {
-		System.out.println(CalculatorFunctions.ln(0.1));
+		System.out.println(Math.pow(10,2.2));
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
-			System.out.println("Please choose one of the following options "
+			System.out.print("Please choose one of the following options "
 					+ "(0 to exit): " 
 					+ "\n\t1- sin(x)"
 					+ "\n\t2- 10^x" 
@@ -22,7 +22,7 @@ public class CalculatorInterface {
 					+ "\n\t5- MAD/STD" 
 					+ "\n\t6- sinh(x)" 
 					+ "\n\t7- x^y"
-					+ "\n\t8- math arithmetic");
+					+ "\n\t8- math arithmetic\n>>>");
 			mainMenuInput = sc.nextInt();
 
 			switch (mainMenuInput) {
@@ -45,9 +45,9 @@ public class CalculatorInterface {
 				keepGoing = true;
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
+					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(Math.pow(10, x));
+					System.out.println(CalculatorFunctions.XtoN(10, x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -141,11 +141,17 @@ public class CalculatorInterface {
 				String userinput;
 				while (keepGoing) { // user interface
 					System.out.print("Write your math equation\n>>>");
-					userinput = sc.nextLine();
+					userinput = sc.next();
 					if (userinput.contains("quit")) {
 						keepGoing = false;
 					} else
 						command_parser(userinput);
+					
+					System.out.print("\nContinue? (y/n)");
+					String userInput = sc.next();
+					if (userInput.equals("n")) {
+						keepGoing = false;
+					}
 				}
 				break;
 			}
@@ -310,7 +316,7 @@ public class CalculatorInterface {
 		while (matcher_mul_exp.find()) {
 			temp = matcher_mul_exp.group().split("\\*\\*");
 			user_command = user_command.replace(matcher_mul_exp.group(),
-					"**" + Double.toString(ten_to_x.XtoN(Double.parseDouble(temp[1]), Double.parseDouble(temp[2]))));
+					"**" + Double.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[1]), Double.parseDouble(temp[2]))));
 			// After replacing the first match to a double value, we have to work on the
 			// remaining
 			// This remind true for every condition
@@ -321,7 +327,7 @@ public class CalculatorInterface {
 		while (matcher_exp.find()) {
 			temp = matcher_exp.group().split("\\*\\*");
 			user_command = user_command.replace(matcher_exp.group(),
-					Double.toString(ten_to_x.XtoN(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]))));
+					Double.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]))));
 			matcher_exp = pattern_exp.matcher(user_command);
 		}
 
