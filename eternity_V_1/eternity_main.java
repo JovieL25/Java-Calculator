@@ -1,158 +1,42 @@
+/*
+* Eternity main
+ * 
+ * Version 1.0
+ * 
+ */
+package eternity_V_1;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Scanner;
 
-import eternity_V_1.ten_to_x;
+public class eternity_main {
 
-public class CalculatorInterface {
-
+	/**
+	 * method main is a simple user interface
+	 * 
+	 * @param args
+	 *            String
+	 */
 	public static void main(String[] args) {
-		System.out.println(CalculatorFunctions.ln(0.1));
-		int mainMenuInput = -1;
-		Scanner sc = new Scanner(System.in);
-		while (mainMenuInput != 0) {
-			System.out.println("Please choose one of the following options "
-					+ "(0 to exit): " 
-					+ "\n\t1- sin(x)"
-					+ "\n\t2- 10^x" 
-					+ "\n\t3- ln(x)" 
-					+ "\n\t4- e^x" 
-					+ "\n\t5- MAD/STD" 
-					+ "\n\t6- sinh(x)" 
-					+ "\n\t7- x^y"
-					+ "\n\t8- math arithmetic");
-			mainMenuInput = sc.nextInt();
-
-			switch (mainMenuInput) {
-			case 1:
-				boolean keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					double x = sc.nextDouble();
-					// replace with calculator function
-					System.out.println(Math.sin(x));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-			case 2:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
-					// replace with calculator function
-					System.out.println(Math.pow(10, x));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-			case 3:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					double x = sc.nextDouble();
-					System.out.println(CalculatorFunctions.ln(x));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-			case 4:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
-					// replace with calculator function
-					System.out.println(Math.pow(Math.E, x));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-			case 5:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
-					// replace with calculator function
-					System.out.println("Put MAD or STD function here");
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-			case 6:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
-					System.out.print("Enter value of y: ");
-					int y = sc.nextInt();
-					// replace with calculator function
-					System.out.println(Math.pow(x, y));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-
-			case 7:
-				keepGoing = true;
-				while (keepGoing) {
-					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
-					System.out.print("Enter value of y: ");
-					int y = sc.nextInt();
-					// replace with calculator function
-					System.out.println(Math.pow(x, y));
-
-					System.out.print("\nContinue? (y/n)");
-					String userInput = sc.next();
-					if (userInput.equals("n")) {
-						keepGoing = false;
-					}
-				}
-				break;
-
-			case 8:
-				keepGoing=true;
-				String userinput;
-				while (keepGoing) { // user interface
-					System.out.print("Write your math equation\n>>>");
-					userinput = sc.nextLine();
-					if (userinput.contains("quit")) {
-						keepGoing = false;
-					} else
-						command_parser(userinput);
-				}
-				break;
-			}
+		// TODO Auto-generated method stub
+		Scanner user_scan = null;
+		boolean flag = true;
+		String userinput;
+		while (flag) { // user interface
+			System.out.print("Write your math equation\n>>>");
+			user_scan = new Scanner(System.in);
+			userinput = user_scan.nextLine();
+			if (userinput.contains("quit")) {
+				System.out.print("Bye!");
+				flag = false;
+			} else
+				command_parser(userinput);
 		}
+		user_scan.close();
 
-		System.out.println("Sucessfully exited Eternity Calculator");
-		sc.close();
 	}
 
 	/**
@@ -260,7 +144,7 @@ public class CalculatorInterface {
 		 * with middle, if length of both left and right side is not 0 we compute both
 		 * side.
 		 * 
-		 * (b+c)+d will have [ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b+c,+d] where the first item being empty
+		 * (b+c)+d will have [¡°¡±£¬b+c,+d] where the first item being empty
 		 * 
 		 * a+((b+c)+d) will have [a+,"",b+c,+d,""]
 		 */

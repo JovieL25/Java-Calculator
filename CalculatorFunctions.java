@@ -13,6 +13,7 @@ public class CalculatorFunctions {
 		}
 		return output;
 	}
+	
 	public static double ln(double arg) {
 
 		double output = 0;
