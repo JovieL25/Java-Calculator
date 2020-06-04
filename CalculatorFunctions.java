@@ -25,8 +25,7 @@ public class CalculatorFunctions {
 			int i = 1;
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max number of iterations
 			while (CalculatorFunctions.abs(CalculatorFunctions.abs(realValue) - CalculatorFunctions.abs(output)) >= accuracy || i == maxIterations) {
-				// change Math.pow to our own pow function
-				output += Math.pow(-1, (i + 1) % 2) * curValue / i;
+				output += CalculatorFunctions.posPow(-1, (i + 1) % 2) * curValue / i;
 				curValue *= arg - 1;
 				i++;
 			}
@@ -38,10 +37,9 @@ public class CalculatorFunctions {
 			}
 			double i = 1;
 			double base = (arg - 1) / arg;
-			// Taylor series expansion of ln(x) centered at x > 1/2
+			// Taylor series expansion of ln(x) centered at x > 1/2 until we hit the desired accuracy or reach a max number of iterations
 			while (CalculatorFunctions.abs(CalculatorFunctions.abs(realValue) - CalculatorFunctions.abs(output)) >= accuracy || i == maxIterations) {
-				// change Math.pow to our own pow function
-				output += Math.pow(base, i) / i;
+				output += CalculatorFunctions.posPow(base, i) / i;
 				i++;
 			}
 		}
@@ -130,17 +128,5 @@ public class CalculatorFunctions {
 	
 		return(-0.9999999999);
 		
-	}
-	
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		double result = CalculatorFunctions.xPowY(10, 15);
-		
-		
-		System.out.println(result);
-		
-		System.out.println(Math.pow(5.1, 2));
 	}
 }

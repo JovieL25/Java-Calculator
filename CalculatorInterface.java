@@ -5,7 +5,7 @@ public class CalculatorInterface {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(CalculatorFunctions.ln(0.1));
+		System.out.println("Welcome to calculator");
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
@@ -102,7 +102,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of y: ");
 					int y = sc.nextInt();
 					// replace with calculator function
-					System.out.println(Math.pow(x, y));
+					System.out.println(CalculatorFunctions.posPow(x, y));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
