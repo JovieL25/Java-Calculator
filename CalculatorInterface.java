@@ -16,7 +16,9 @@ public class CalculatorInterface {
 					+ "\n\t3- ln function"
 					+ "\n\t4- e^x"
 					+ "\n\t5- MAD/STD"
-					+ "\n\t6-x^y");
+					+ "\n\t6- x^y"
+					+ "\n\t7- sinh function"
+					);
 			mainMenuInput = sc.nextInt();
 
 			switch (mainMenuInput) {
