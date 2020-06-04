@@ -1,5 +1,3 @@
-package project.ETERNITY.src;
-
 import java.util.ArrayList;
 
 public class CalculatorFunctions {
@@ -49,22 +47,12 @@ public class CalculatorFunctions {
 				fac *= j;
 			}
 
-			result += mypow(-1.0, i) * mypow(input, 2 * i + 1) / fac;
+			result += BuiltInFunctionImplementation.posPow(-1.0, i) * BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 
 		}
 		return result;
 	}
-	public double mypow(double x, int index) {
 
-		double r = 1;
-
-		for (int i = 0; i < index; i++) {
-
-			r *= x;
-		}
-
-		return r;
-	}
 
 	//////////////////////////////////////////////////////////
 
@@ -78,16 +66,11 @@ public class CalculatorFunctions {
 	public static double taylor_expand(double x, double n) {
 		double result = 1;
 		for (int i = 1; i < 30; i++) {
-			result += XtoN(n * ln(x), i) / factorial(i);
+			result += XtoN(n * ln(x), i) / BuiltInFunctionImplementation.factorial(i);
 		}
 		return result;
 	}
-	public static int factorial(int x) {
-		if (x == 0 || x == 1)
-			return 1;
-		else
-			return x * factorial(x - 1);
-	}
+
 	public static double XtoN(double x, double n) {
 		if (isRational(n)) {
 			return taylor_expand(x, n);
@@ -125,7 +108,7 @@ public class CalculatorFunctions {
 			// number of iterations
 			while (BuiltInFunctionImplementation.abs(BuiltInFunctionImplementation.abs(realValue)
 					- BuiltInFunctionImplementation.abs(output)) >= accuracy || i == maxIterations) {
-				// change Math.pow to our own pow function
+				/* change Math.pow to our own pow function */
 				output += BuiltInFunctionImplementation.posPow(-1, (i + 1) % 2) * curValue / i;
 				curValue *= arg - 1;
 				i++;
@@ -138,10 +121,10 @@ public class CalculatorFunctions {
 			}
 			double i = 1;
 			double base = (arg - 1) / arg;
-			// Taylor series expansion of ln(x) centered at x > 1/2
+			/* Taylor series expansion of ln(x) centered at x > 1/2 */
 			while (BuiltInFunctionImplementation.abs(BuiltInFunctionImplementation.abs(realValue)
 					- BuiltInFunctionImplementation.abs(output)) >= accuracy || i == maxIterations) {
-				// change Math.pow to our own pow function
+				/* change Math.pow to our own pow function */
 				output += BuiltInFunctionImplementation.posPow(base, i) / i;
 				i++;
 			}
@@ -176,43 +159,36 @@ public class CalculatorFunctions {
 	 */
 	public static double MAD(String str) {
 
-		ArrayList<number> list = new ArrayList<>();
-		int counter = 0;
-		int total = 0;
-		double defInTotal = 0;
+		ArrayList<Integer> list=new ArrayList<>();
+        int counter=0;
+        int total=0;
+        double defInTotal=0;
 
-		if (str.equals(""))
-			return 0;
-		double result = 0;
-		String[] s = str.split(",");
-		for (int i = 0; i < s.length; i++) {
-			int temp = Integer.valueOf(s[i]);
-			list.add(new number(temp));
-			total += temp;
-			counter++;
-		}
+        if (str.equals(""))
+            return 0;
+        double result=0;
+        String[] s=str.split(",");
+        for(int i=0;i<s.length;i++){
+            int temp=Integer.valueOf(s[i]);
+            list.add(temp);
+            total+=temp;
+            counter++;
+        }
 
-		if (counter == 0)
-			result = 0;
-		else {
-			double avg = (double) total / counter;
-			for (int i = 0; i < list.size(); i++) {
-				defInTotal += BuiltInFunctionImplementation.abs(list.get(i).n - avg);
-			}
-			result = defInTotal / counter;
-		}
-		// System.out.println(total+" "+counter+" "+defInTotal);
-		return result;
+        if(counter==0)
+            result=0;
+        else{
+            double avg=(double)total/counter;
+            for(int i=0;i<list.size();i++){
+                defInTotal+=BuiltInFunctionImplementation.abs(list.get(i)-avg);
+            }
+            result=defInTotal/counter;
+        }
+        //System.out.println(total+" "+counter+" "+defInTotal);
+        return result;
 
 	}
 
-	static class number {
-		int n;
-
-		number(int n) {
-			this.n = n;
-		}
-	}
 	
 	//////////////////////////////////////////////////////////
 	
