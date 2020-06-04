@@ -260,7 +260,7 @@ public class CalculatorInterface {
 		 * with middle, if length of both left and right side is not 0 we compute both
 		 * side.
 		 * 
-		 * (b+c)+d will have [¡°¡±£¬b+c,+d] where the first item being empty
+		 * (b+c)+d will have [ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b+c,+d] where the first item being empty
 		 * 
 		 * a+((b+c)+d) will have [a+,"",b+c,+d,""]
 		 */
