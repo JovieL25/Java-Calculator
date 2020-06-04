@@ -1,3 +1,5 @@
+package project.ETERNITY.src;
+
 
 /* This class implements all the built-in functions we need in the Math library */
 public class BuiltInFunctionImplementation {
