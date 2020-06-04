@@ -4,6 +4,7 @@ public class CalculatorFunctions {
 	private static int maxIterations = 200; // Increase for higher precision outputs
 	private static final double accuracy = 0.00001;
 	public static final double e = 2.718281828459;
+	private static final double PI = 3.14159265359;
 
 	public static double abs(double arg) {
 		double output = arg;
@@ -132,6 +133,32 @@ public class CalculatorFunctions {
 		
 	}
 	
+	public static double sinh(double num, boolean isNumDegree) {
+
+        /* Degree to Radian */
+        if (isNumDegree) {
+            num = num * PI / 180;
+        }
+
+        double sum = num;
+        double step = num;
+
+        /* Compute until the value of step is smaller than 9 decimal places */
+        int k = 2;
+        while (Double.compare(step >= 0 ? step : step * (-1), ACCURACY) > 0) {
+            step = step * num * num / (k * (k + 1));
+            sum += step;
+
+            if (sum == Double.POSITIVE_INFINITY) {
+                throw new ArithmeticException("Positive Infinity");
+            } else if (sum == Double.NEGATIVE_INFINITY) {
+                throw new ArithmeticException("Negative Infinity");
+            }
+            k += 2;
+        }
+
+        return sum;
+    }
 	
 	
 	public static void main(String[] args) {
