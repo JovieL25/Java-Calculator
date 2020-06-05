@@ -1,4 +1,4 @@
-package project;
+package project
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 public class CalculatorInterface {
 
 	public static void main(String[] args) {
-		System.out.println(Math.pow(10,2.2));
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
@@ -32,7 +31,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(Math.sin(x));
+					System.out.println(CalculatorFunctions.sinforR(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -62,7 +61,6 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					System.out.println(CalculatorFunctions.ln(x));
-
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -76,7 +74,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					int x = sc.nextInt();
 					// replace with calculator function
-					System.out.println(Math.pow(Math.E, x));
+					System.out.println(CalculatorFunctions.EXP(x, 1));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -89,9 +87,9 @@ public class CalculatorInterface {
 				keepGoing = true;
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
+					String x = sc.next();
 					// replace with calculator function
-					System.out.println("Put MAD or STD function here");
+					System.out.println(CalculatorFunctions.MAD(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -105,10 +103,8 @@ public class CalculatorInterface {
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
 					int x = sc.nextInt();
-					System.out.print("Enter value of y: ");
-					int y = sc.nextInt();
 					// replace with calculator function
-					System.out.println(Math.pow(x, y));
+					System.out.println(CalculatorFunctions.sinh(x, false));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -126,7 +122,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of y: ");
 					int y = sc.nextInt();
 					// replace with calculator function
-					System.out.println(Math.pow(x, y));
+					System.out.println(CalculatorFunctions.xPowY(x, y));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
