@@ -1,4 +1,4 @@
-package project
+package project;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -298,12 +298,13 @@ public class CalculatorInterface {
 		 */
 
 		String[] temp;
-		Pattern pattern_mul_exp = Pattern.compile("(\\*\\*\\d+(\\.\\d+)?(E\\d+)?\\*\\*\\d+(\\.\\d+)?(E\\\\d+)?)");
-		Pattern pattern_exp = Pattern.compile("(\\d+(\\.\\d+)?(E\\d+)?\\*\\*\\d+(\\.\\d+)?(E\\d+)?)");
-		Pattern pattern_mul = Pattern.compile("(\\d+(\\.\\d+)?(E\\d+)?\\*\\d+(\\.\\d+)?(E\\d+)?)");
-		Pattern pattern_div = Pattern.compile("(\\d+(\\.\\d+)?(E\\d+)?\\/\\d+(\\.\\d+)?(E\\d+)?)");
-		Pattern pattern_add = Pattern.compile("(\\d+(\\.\\d+)?(E\\d+)?\\+\\d+(\\.\\d+)?(E\\d+)?)");
-		Pattern pattern_sub = Pattern.compile("(\\d+(\\.\\d+)?(E\\d+)?\\-\\d+(\\.\\d+)?(E\\d+)?)");
+		Pattern pattern_neg = Pattern.compile("(^\\-)\\d+(\\.\\d+)?");
+		Pattern pattern_mul_exp = Pattern.compile("(\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\\\d+)?)");
+		Pattern pattern_exp = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
+		Pattern pattern_mul = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
+		Pattern pattern_div = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\/(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
+		Pattern pattern_add = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\+(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
+		Pattern pattern_sub = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\-(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
 
 		// The following part deals with a specific case where the input is
 		// a**b**c -> a^(b^(c))
@@ -328,31 +329,129 @@ public class CalculatorInterface {
 		}
 
 		Matcher matcher_mul = pattern_mul.matcher(user_command);
-		while (matcher_mul.find()) {
-			temp = matcher_mul.group().split("\\*");
-			user_command = user_command.replace(matcher_mul.group(),
-					Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
-			matcher_mul = pattern_mul.matcher(user_command);
-		}
 		Matcher matcher_div = pattern_div.matcher(user_command);
+		/*
+		 * Mul and Div have the same priorities
+		 * So we need to verify both's operation's position to determine which execute first
+		 * */
+		while (matcher_mul.find()) {
+			if(matcher_div.find()) {
+				int mul_index = user_command.indexOf(matcher_mul.group());
+				int div_index = user_command.indexOf(matcher_div.group());
+				if(mul_index < div_index){
+					temp = matcher_mul.group().split("\\*");
+					user_command = user_command.replace(matcher_mul.group(),
+							Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
+					matcher_mul = pattern_mul.matcher(user_command);
+				}
+				else {
+					temp = matcher_div.group().split("\\/");
+					user_command = user_command.replace(matcher_div.group(),
+							Double.toString(Double.parseDouble(temp[0]) / Double.parseDouble(temp[1])));
+					matcher_div = pattern_div.matcher(user_command);
+					
+					temp = matcher_mul.group().split("\\*");
+					user_command = user_command.replace(matcher_mul.group(),
+							Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
+					matcher_mul = pattern_mul.matcher(user_command);
+				}
+				
+			}
+			else {
+				temp = matcher_mul.group().split("\\*");
+				user_command = user_command.replace(matcher_mul.group(),
+						Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
+				matcher_mul = pattern_mul.matcher(user_command);
+			}
+		}
+		
 		while (matcher_div.find()) {
 			temp = matcher_div.group().split("\\/");
 			user_command = user_command.replace(matcher_div.group(),
 					Double.toString(Double.parseDouble(temp[0]) / Double.parseDouble(temp[1])));
 			matcher_div = pattern_div.matcher(user_command);
 		}
+		
+		
 		Matcher matcher_add = pattern_add.matcher(user_command);
-		while (matcher_add.find()) {
-			temp = matcher_add.group().split("\\+");
-			user_command = user_command.replace(matcher_add.group(),
-					Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
-			matcher_add = pattern_add.matcher(user_command);
-		}
 		Matcher matcher_sub = pattern_sub.matcher(user_command);
+		while (matcher_add.find()) {
+			if(matcher_sub.find()) {
+				int add_index = user_command.indexOf(matcher_add.group());
+				int sub_index = user_command.indexOf(matcher_sub.group());
+				
+				if(add_index<sub_index) {
+					temp = matcher_add.group().split("\\+");
+					user_command = user_command.replace(matcher_add.group(),
+							Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
+					matcher_add = pattern_add.matcher(user_command);
+				}
+				else {
+					temp = matcher_sub.group().split("\\-");
+					int first=-1,second=-1;
+					for(int i =0;i<temp.length;i++)
+						if(temp[i].length()==0) {
+							temp[i+1]="-"+temp[i+1];
+							if(first==-1)
+								first=i+1;
+							else
+								second=i+1;
+						}
+					if(first==-1)
+						user_command = user_command.replace(matcher_sub.group(),
+								Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[1])));
+					else if(second==-1)
+						if(first==1)
+							user_command = user_command.replace(matcher_sub.group(),
+									Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first+1])));
+						else
+							user_command = user_command.replace(matcher_sub.group(),
+									Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[first])));
+					else
+						user_command = user_command.replace(matcher_sub.group(),
+								Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[second])));
+					matcher_sub = pattern_sub.matcher(user_command);
+					
+					temp = matcher_add.group().split("\\+");
+					user_command = user_command.replace(matcher_add.group(),
+							Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
+					matcher_add = pattern_add.matcher(user_command);
+				}
+			}
+			else {
+				temp = matcher_add.group().split("\\+");
+				user_command = user_command.replace(matcher_add.group(),
+						Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
+				matcher_add = pattern_add.matcher(user_command);
+			}
+			
+		}
+		
 		while (matcher_sub.find()) {
+			//System.out.println(matcher_sub.group());
 			temp = matcher_sub.group().split("\\-");
-			user_command = user_command.replace(matcher_sub.group(),
-					Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[1])));
+			int first=-1,second=-1;
+			for(int i =0;i<temp.length;i++)
+				if(temp[i].length()==0) {
+					temp[i+1]="-"+temp[i+1];
+					if(first==-1)
+						first=i+1;
+					else
+						second=i+1;
+				}
+			if(first==-1)
+				user_command = user_command.replace(matcher_sub.group(),
+						Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[1])));
+			else if(second==-1)
+				if(first==1)
+					user_command = user_command.replace(matcher_sub.group(),
+							Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first+1])));
+				else
+					user_command = user_command.replace(matcher_sub.group(),
+							Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[first])));
+			else
+				user_command = user_command.replace(matcher_sub.group(),
+						Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[second])));
 			matcher_sub = pattern_sub.matcher(user_command);
 		}
 		return Double.parseDouble(user_command);

@@ -1,4 +1,4 @@
-package project
+package project;
 import java.util.ArrayList;
 
 public class CalculatorFunctions {
@@ -129,7 +129,7 @@ public class CalculatorFunctions {
 	public static double taylor_expand(double a, double x) {
 		double result = 1;
 		for (int i = 1; i < 13; i++) {
-			result += XtoN(x * ln_jingyi(a), i) / factorial(i);
+			result += XtoN(x * ln(a), i) / factorial(i);
 		}
 		return result;
 	}
