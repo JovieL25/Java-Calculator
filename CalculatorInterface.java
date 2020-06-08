@@ -18,7 +18,7 @@ public class CalculatorInterface {
 					+ "\n\t2- 10^x" 
 					+ "\n\t3- ln(x)" 
 					+ "\n\t4- e^x" 
-					+ "\n\t5- MAD/STD" 
+					+ "\n\t5- MAD"
 					+ "\n\t6- sinh(x)" 
 					+ "\n\t7- x^y"
 					+ "\n\t8- math arithmetic\n>>>");
@@ -86,7 +86,7 @@ public class CalculatorInterface {
 			case 5:
 				keepGoing = true;
 				while (keepGoing) {
-					System.out.print("Enter value of x: ");
+					System.out.print("Enter the values, use \",\" to separate: ");
 					String x = sc.next();
 					// replace with calculator function
 					System.out.println(CalculatorFunctions.MAD(x));
