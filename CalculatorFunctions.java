@@ -243,25 +243,29 @@ public class CalculatorFunctions {
 
 	/*
 	 * Function 5: MAD by Xuan
-	 * 
-	 * an arrayList is used to save the input of the user, will write my own
-	 * structure if this lib is not allowed. the counter is used to get how many
-	 * numbers the user typed. what to do next: add exceptions(input error), allow
-	 * user change their input before calculate,allow double input
+	 *
+	 * the string is first divided into several strings
+	 * then an arrayList is used to save the input of the user,
+	 * will write my own structure if this lib is not allowed.
+	 * the counter is used to get how many
+	 * numbers the user typed.
+	 * what to do next: add exceptions(input error),
+	 * allow user change their input before calculating
+	 * save the equation for further check(to be decide)
 	 */
 	public static double MAD(String str) {
-		ArrayList<number> list = new ArrayList<>();
+		ArrayList<Double> list = new ArrayList<>();
 		int counter = 0;
-		int total = 0;
-		double defInTotal = 0;
+		double total = 0;
+		double difInTotal = 0;
 
 		if (str.equals(""))
 			return 0;
 		double result = 0;
 		String[] s = str.split(",");
 		for (int i = 0; i < s.length; i++) {
-			int temp = Integer.valueOf(s[i]);
-			list.add(new number(temp));
+			double temp = Double.valueOf(s[i]);
+			list.add(temp);
 			total += temp;
 			counter++;
 		}
@@ -269,23 +273,15 @@ public class CalculatorFunctions {
 		if (counter == 0)
 			result = 0;
 		else {
-			double avg = (double) total / counter;
+			double avg =  total / counter;
 			for (int i = 0; i < list.size(); i++) {
-				defInTotal += BuiltInFunctionImplementation.abs(list.get(i).n - avg);
+				difInTotal += BuiltInFunctionImplementation.abs(list.get(i) - avg);
 			}
-			result = defInTotal / counter;
+			result = difInTotal / counter;
 		}
-		// System.out.println(total+" "+counter+" "+defInTotal);
+		//System.out.println(total+" "+counter+" "+difInTotal);
 		return result;
 
-	}
-
-	static class number {
-		int n;
-
-		number(int n) {
-			this.n = n;
-		}
 	}
 
 	//////////////////////////////////////////////////////////
