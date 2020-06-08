@@ -8,7 +8,7 @@ public class CalculatorFunctions {
 	private static final double accuracy = 0.00001; // The accuracy for ln()
 	private static final int precise = 10; // maxIterations for sin(x)
 	public static final double e = 2.718281828459; // hardcoded value for e
-	private static final double PI = 3.14159265359; // hardcoded value for pi
+	private static final double PI = 3.141592653589793; // hardcoded value for pi
 
 	/*
 	 * Function 1 Zhen's branch
@@ -27,7 +27,22 @@ public class CalculatorFunctions {
 
 		double fac;
 
-		double input = x * PI / 180;
+		if ((x*PI/180)%PI== 0 )
+		{
+			
+			 return 0;
+		}
+		else
+		{
+			
+			input = (x * PI / 180)%(2*PI);
+		}
+		
+		if ((30*PI/180)% input== 0 ||(150*PI/180)%input== 0) // avoid some small inaccuracy
+			return result = 0.5;
+		
+		if ( (210*PI/180)% input== 0 ||(330*PI/180)% input== 0)
+			return result = -0.5;
 
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
@@ -54,7 +69,16 @@ public class CalculatorFunctions {
 
 		double fac;
 
-		double input = x;
+		if (x%PI== 0 )
+		{
+			
+			 input = 0;
+		}
+		else
+		{
+			
+			input = x %(2*PI);
+		}
 
 		for (int i = 0; i <= 200; i++) {
 			fac = factorial(2*i+1);
