@@ -44,12 +44,8 @@ public class CalculatorFunctions {
 
 		input = x;
 
-		for (int i = 0; i <= precise; i++) {
-			fac = 1;
-			for (int j = 2; j <= 2 * i + 1; j++) {
-				fac *= j;
-			}
-
+		for (int i = 0; i <= 200; i++) {
+			fac = factorial(2*i+1);
 			result += mypow(-1.0, i) * mypow(input, 2 * i + 1) / fac;
 
 		}
@@ -235,7 +231,7 @@ public class CalculatorFunctions {
 			return Double.POSITIVE_INFINITY;
 		if (n > 150) // n=150, xMAX = 113
 			return exSum;
-		exSum += Math.pow(x, n) / BuiltInFunctionImplementation.factorial(n);
+		exSum += XtoN(x, n) / BuiltInFunctionImplementation.factorial(n);
 		return EXP(x, n + 1); // n factorial
 	}
 
@@ -351,6 +347,7 @@ public class CalculatorFunctions {
 				// calculate y * ln(x)
 				double temp = y * CalculatorFunctions.ln(x);
 				result = CalculatorFunctions.EXP(temp, 1);
+				exSum=1;
 				return result;
 				// return Math.pow(x, y);
 			}
