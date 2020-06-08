@@ -1,28 +1,33 @@
 package project;
+
 import java.util.ArrayList;
 
 public class CalculatorFunctions {
 
 	private static int maxIterations = 200; // Increase for higher precision outputs, for ln()
 	private static final double accuracy = 0.00001; // The accuracy for ln()
-	public static final double e = 2.718281828459;
-	static double exSum = 1; // The result for exp function
-	private static final double PI = 3.14159265359;
+	private static final int precise = 10; // maxIterations for sin(x)
+	public static final double e = 2.718281828459; // hardcoded value for e
+	private static final double PI = 3.14159265359; // hardcoded value for pi
 
 	/*
 	 * Function 1 Zhen's branch
 	 */
-	private static double input;
-	private static int precise = 10;
-	private static double result;
 
+	/**
+	 * 
+	 * Use Taylor series to perform an approximation of sin(x) in degrees
+	 * 
+	 * @param x
+	 * @return result
+	 */
 	public static double sin(double x) {
 
-		result = 0;
+		double result = 0;
 
 		double fac;
 
-		input = x * PI / 180;
+		double input = x * PI / 180;
 
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
@@ -30,19 +35,26 @@ public class CalculatorFunctions {
 				fac *= j;
 			}
 
-			result += mypow(-1.0, i) * mypow(input, 2 * i + 1) / fac;
+			result += BuiltInFunctionImplementation.posPow(-1.0, i)
+					* BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 
 		}
 		return result;
 	}
 
+	/**
+	 * Use Taylor series to perform an approximation of sin(x) in radians
+	 * 
+	 * @param x
+	 * @return result
+	 */
 	public static double sinforR(double x) {
 
-		result = 0;
+		double result = 0;
 
 		double fac;
 
-		input = x;
+		double input = x;
 
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
@@ -50,23 +62,12 @@ public class CalculatorFunctions {
 				fac *= j;
 			}
 
-			result += mypow(-1.0, i) * mypow(input, 2 * i + 1) / fac;
+			result += BuiltInFunctionImplementation.posPow(-1.0, i)
+					* BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 
 		}
 
 		return result;
-	}
-
-	public static double mypow(double x, int index) {
-
-		double r = 1;
-
-		for (int i = 0; i < index; i++) {
-
-			r *= x;
-		}
-
-		return r;
 	}
 
 	//////////////////////////////////////////////////////////
@@ -76,38 +77,6 @@ public class CalculatorFunctions {
 	 * compute the TF 10^x The methods include XtoN ln isRational taylor_expand
 	 * factorial abs
 	 */
-
-	/**
-	 * method ln compute and return ln(x)
-	 * 
-	 * @param x can be an integer or rational number
-	 * @return ln(x) in double
-	 */
-	public static double ln_jingyi(double x) {
-		/*
-		 * this method takes the approximation method of finding ln The procedure is: 1.
-		 * write x in A*10^(n-1) 1<=A<=10 2. compute y = (A-1)/(A+1) 3. calculate SP =
-		 * 2*sigma_k=0 k->inf ((y^(2k+1))/(2k+1)) 4. ln(x) = n*log(10)+Sp
-		 * 
-		 * Notice ln(10) = 2.302585092994046 src:
-		 * https://math.stackexchange.com/questions/977586/is-there-an-approximation-to-
-		 * the-natural-log-function-at-large-values
-		 */
-
-		double SP = 0;
-		String a = String.format("%1.30e", x); // format double to scientific notation
-		a = a.split("e")[0];
-		int n = String.valueOf(Double.parseDouble(a)).length() - 2;
-		/* integer n being the number of decimal after turn into scientific notation */
-
-		double y = Double.parseDouble(a);
-		y = (y - 1) / (y + 1);
-
-		for (int i = 0; i < 10; i++)
-			SP += 2 * (XtoN(y, 2 * i + 1) / (2 * i + 1));
-
-		return n * 2.302585092994046 + SP;
-	}
 
 	/**
 	 * method isRational determine
@@ -174,48 +143,49 @@ public class CalculatorFunctions {
 
 	}
 
-	/**
-	 * method abs is to return the absolute of the value of a
-	 * 
-	 * @param a double
-	 * @return a
-	 */
-	public static double abs_jingyi(double a) {
-		return (a <= 0.0D) ? 0.0D - a : a;
-	}
+
 
 	//////////////////////////////////////////////////////////
 
 	/*
-	 * Function 3: ln(x) by Dereck Liu
+	 * Function 3: ln(x) by Derek Liu
 	 * 
 	 */
 	/**
-	 * method ln uses Talyor series approximations to find the value of ln(arg)
-	 * @param arg
+	 * method ln uses Talyor series approximations to find the value of ln(x)
+	 * 
+	 * @param x
 	 * @return output
 	 */
-	public static double ln(double arg) {
+	public static double ln(double x) {
 
 		double output = 0;
 
-		// Using Taylor series approximation for values < 1 as trapezoidal sums diverge
-		// at ln(0)
-		double curValue = arg - 1;
-		if (arg < 1) {
-			// Converge the Taylor series until we hit our desired accuracy or we hit a max
-			// number of iterations
+		
+		double curValue = x - 1;
+		if (x < 0) {
+			//Could potentially implement error catching
+			System.out.println("MATH ERROR");
+			output = Integer.MIN_VALUE;
+			return output;
+		} else if (x < 1) {
+			// Using Taylor series approximation for values < 1 as trapezoidal sums diverge
+			// at ln(0)
+			
 			for (int i = 1; i < maxIterations; i++) {
 				output += BuiltInFunctionImplementation.posPow(-1, (i + 1) % 2) * curValue / i;
-				curValue *= arg - 1;
+				curValue *= x - 1;
 			}
-		} else if (arg == 1) {
+		} else if (x == 1) {
 			output = 0;
-		} else if (arg > 1) {
-			if (arg == e) {
+		} else if (x > 1) {
+			//Return 1 if x is very close to e
+			if (BuiltInFunctionImplementation.abs(x - e) <= accuracy) {
 				return 1;
 			}
-			double base = (arg - 1) / arg;
+			// Converge the Taylor series until we hit our desired accuracy or we hit a max
+			// number of iterations
+			double base = (x - 1) / x;
 			for (int i = 1; i < maxIterations; i++) {
 				output += BuiltInFunctionImplementation.posPow(base, i) / i;
 			}
@@ -231,6 +201,7 @@ public class CalculatorFunctions {
 	 */
 	// not handling negative values
 	public static double EXP(double x, int n) {
+		double exSum = 1;
 		if (x > 709)
 			return Double.POSITIVE_INFINITY;
 		if (n > 150) // n=150, xMAX = 113
@@ -253,6 +224,7 @@ public class CalculatorFunctions {
 	 * allow user change their input before calculating
 	 * save the equation for further check(to be decide)
 	 */
+
 	public static double MAD(String str) {
 		ArrayList<Double> list = new ArrayList<>();
 		int counter = 0;
@@ -290,6 +262,13 @@ public class CalculatorFunctions {
 	 * Function 7: sinh by Ziqian
 	 * 
 	 */
+
+	/**
+	 * 
+	 * @param num
+	 * @param isNumDegree
+	 * @return sum
+	 */
 	public static double sinh(double num, boolean isNumDegree) {
 
 		/* Degree to Radian */
@@ -322,6 +301,13 @@ public class CalculatorFunctions {
 	/*
 	 * Function 8: x^y by Shiyu Lin
 	 * 
+	 */
+
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return result
 	 */
 	public static double xPowY(double x, double y) {
 		// x and y are both real numbers
