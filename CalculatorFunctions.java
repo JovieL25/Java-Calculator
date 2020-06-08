@@ -86,7 +86,7 @@ public class CalculatorFunctions {
 		//formula: sum(from n = 0 to n = +inf) x^n/n!
 		//Since the program could not go literally to infinity, limit the maximum iteration to 100
 		double result = 0.0;
-		for(int i = 0; i < 150; i++) {
+		for(int i = 0; i < 155; i++) {
 			result += (CalculatorFunctions.posPow(x, i))/(CalculatorFunctions.factorial(i));
 		}
 		return result;
@@ -95,40 +95,48 @@ public class CalculatorFunctions {
 	
 	public static double xPowY(double x, double y) {
 		// x and y are both real numbers  
-		// 1. special case when x = 0 
-		if(x == 0)
+		// 1. special case when x = 0
+		int test = (int)y;
+		if(y == test)
 		{
-			// 1. if y <= 0
-			if(y == 0 || y < 0)
-			{
-				System.out.println("Math Error!");
-				return(-0.9999999999);//for now the value returned is just to indicate error
+			double result = 1.0;
+			for(int i = 0; i < y; i++) {
+				result = result * x;
 			}
-			// 2. if y > 0
-			if(y > 0)
+			return result;
+		}
+		else {
+			if(x == 0)
 			{
-				return 0.0;
+				// 1. if y <= 0
+				if(y == 0 || y < 0)
+				{
+					System.out.println("Math Error!");
+				}
+				// 2. if y > 0
+				if(y > 0)
+				{
+					return 0.0;
+				}
+			}
+			//2. if x is a negative real number or positive real number
+			else if(x > 0 || x < 0)
+			{
+				if(y == 0)// exponential is zero always return 1.0
+				{
+					return 1.0;
+				}
+				else
+				{
+					double result = 0.0;
+					//calculate y * ln(x)
+					double temp = y * CalculatorFunctions.ln(x);
+					result = CalculatorFunctions.exp(temp);
+					return result;
+				}
 			}
 		}
-		//2. if x is a negative real number or positive real number
-		else if(x > 0 || x < 0)
-		{
-			if(y == 0)// exponential is zero always return 1.0
-			{
-				return 1.0;
-			}
-			else
-			{
-				double result = 0.0;
-				//calculate y * ln(x)
-				double temp = y * CalculatorFunctions.ln(x);
-				result = CalculatorFunctions.exp(temp);
-				return result;
-				//return Math.pow(x, y);
-			}
-		}
-	
-		return(-0.9999999999);
+		return(0.0);
 		
 	}
 	
@@ -136,11 +144,12 @@ public class CalculatorFunctions {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		double result = CalculatorFunctions.xPowY(10, 15);
-		
-		
+		double result = CalculatorFunctions.xPowY(10, -1);
+		double a = 15321.0;
+		int b = (int)a;
+		System.out.println(a == b);
 		System.out.println(result);
 		
-		System.out.println(Math.pow(5.1, 2));
+		System.out.println(Math.pow(10, 0.1));
 	}
 }
