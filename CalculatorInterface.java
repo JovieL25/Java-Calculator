@@ -72,10 +72,10 @@ public class CalculatorInterface {
 				keepGoing = true;
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
+					double x = sc.nextDouble();
 					// replace with calculator function
 					System.out.println(CalculatorFunctions.EXP(x, 1));
-
+					CalculatorFunctions.exSum=1;
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -102,7 +102,7 @@ public class CalculatorInterface {
 				keepGoing = true;
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
-					int x = sc.nextInt();
+					double x = sc.nextDouble();
 					// replace with calculator function
 					System.out.println(CalculatorFunctions.sinh(x, false));
 
@@ -201,7 +201,10 @@ public class CalculatorInterface {
 				for (String b : a.split("\\)"))
 					split_result.add(b);
 			}
-
+			
+			for(String c:split_result)
+				System.out.println(c);
+			
 			if (split_result.size() == 2) {
 				if (split_result.get(0).length() > 0)
 					return split_result.get(0) + parse_command(split_result.get(1));
