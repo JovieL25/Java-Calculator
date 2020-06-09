@@ -1,4 +1,4 @@
-package project;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -75,7 +75,6 @@ public class CalculatorInterface {
 					double x = sc.nextDouble();
 					// replace with calculator function
 					System.out.println(CalculatorFunctions.EXP(x, 1));
-					CalculatorFunctions.exSum=1;
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {

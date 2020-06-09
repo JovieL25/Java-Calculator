@@ -1,4 +1,3 @@
-package project;
 
 import java.util.ArrayList;
 
@@ -8,7 +7,8 @@ public class CalculatorFunctions {
 	private static final double accuracy = 0.00001; // The accuracy for ln()
 	private static final int precise = 10; // maxIterations for sin(x)
 	public static final double e = 2.718281828459; // hardcoded value for e
-	private static final double PI = 3.14159265359; // hardcoded value for pi
+	private static final double PI = 3.141592653589793; // hardcoded value for pi
+	protected static double exSum = 1;
 
 	/*
 	 * Function 1 Zhen's branch
@@ -26,8 +26,18 @@ public class CalculatorFunctions {
 		double result = 0;
 
 		double fac;
+		double input;
 
-		double input = x * PI / 180;
+		if ((x*PI/180)%PI== 0 )
+			 return 0;
+		else
+			input = (x * PI / 180)%(2*PI);
+		
+		if ((30*PI/180)% input== 0 ||(150*PI/180)%input== 0) // avoid some small inaccuracy
+			return result = 0.5;
+		
+		if ( (210*PI/180)% input== 0 ||(330*PI/180)% input== 0)
+			return result = -0.5;
 
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
@@ -51,10 +61,14 @@ public class CalculatorFunctions {
 	public static double sinforR(double x) {
 
 		double result = 0;
-
+		double input;
 		double fac;
 
-		double input = x;
+		if (x%PI== 0 )
+			 input = 0;
+		else
+			
+			input = x %(2*PI);
 
 		for (int i = 0; i <= 200; i++) {
 			fac = factorial(2*i+1);
@@ -142,11 +156,9 @@ public class CalculatorFunctions {
 
 	//////////////////////////////////////////////////////////
 
-	/*
+	/**
 	 * Function 3: ln(x) by Derek Liu
 	 * 
-	 */
-	/**
 	 * method ln uses Talyor series approximations to find the value of ln(x)
 	 * 
 	 * @param x
@@ -191,12 +203,15 @@ public class CalculatorFunctions {
 	//////////////////////////////////////////////////////////
 
 	/*
-	 * Function 4: e^x by Yilu Liang double x is the user input int n is always 1
+	 * Function 4: e^x by Yilu Liang 
+	 * 
 	 * when using this function maximum x = 113, result = 1.188812691963352E49
+	 * 
+	 * @param x the user input
+	 * @param n always 1
+	 * @return exponential results
 	 */
-	// not handling negative values
 	public static double EXP(double x, int n) {
-		double exSum = 1;
 		if (x > 709)
 			return Double.POSITIVE_INFINITY;
 		if (n > 150) // n=150, xMAX = 113
@@ -218,6 +233,9 @@ public class CalculatorFunctions {
 	 * what to do next: add exceptions(input error),
 	 * allow user change their input before calculating
 	 * save the equation for further check(to be decide)
+	 * 
+	 * @param str the user input
+	 * @return the MAD result
 	 */
 
 	public static double MAD(String str) {
@@ -246,19 +264,14 @@ public class CalculatorFunctions {
 			}
 			result = difInTotal / counter;
 		}
-		//System.out.println(total+" "+counter+" "+difInTotal);
 		return result;
 
 	}
 
 	//////////////////////////////////////////////////////////
 
-	/*
-	 * Function 7: sinh by Ziqian
-	 * 
-	 */
-
 	/**
+	 * Function 7: sinh by Ziqian
 	 * 
 	 * @param num
 	 * @param isNumDegree
@@ -293,49 +306,62 @@ public class CalculatorFunctions {
 
 	//////////////////////////////////////////////////////////
 
-	/*
-	 * Function 8: x^y by Shiyu Lin
-	 * 
-	 */
 
 	/**
+	 * Function 8: x^y by Shiyu Lin
 	 * 
 	 * @param x
 	 * @param y
 	 * @return result
 	 */
 	public static double xPowY(double x, double y) {
-		// x and y are both real numbers
+		// x and y are both real numbers  
 		// 1. special case when x = 0
-		if (x == 0) {
-			// 1. if y <= 0
-			if (y == 0 || y < 0) {
-				System.out.println("Math Error!");
-				return (-0.9999999999);// for now the value returned is just to indicate error
+		int test = (int)y;
+		if(y == test && y != 0 && x != 0)
+		{
+			double result = 1.0;
+			if(test < 0) {
+				x = 1/x;
 			}
-			// 2. if y > 0
-			if (y > 0) {
-				return 0.0;
+			for(int i = 0; i < BuiltInFunctionImplementation.abs(y); i++) {
+				result = result * x;
 			}
+			return result;
 		}
-		// 2. if x is a negative real number or positive real number
-		else if (x > 0 || x < 0) {
-			if (y == 0)// exponential is zero always return 1.0
+		else {
+			if(x == 0)
 			{
-				return 1.0;
-			} else {
-				double result = 0.0;
-				// calculate y * ln(x)
-				double temp = y * CalculatorFunctions.ln(x);
-				result = CalculatorFunctions.EXP(temp, 1);
-				exSum=1;
-				return result;
-				// return Math.pow(x, y);
+				// 1. if y <= 0
+				if(y == 0 || y < 0)
+				{
+					System.out.println("Math Error!");
+				}
+				// 2. if y > 0
+				if(y > 0)
+				{
+					return 0.0;
+				}
+			}
+			//2. if x is a negative real number or positive real number
+			else if(x > 0 || x < 0)
+			{
+				if(y == 0)// exponential is zero always return 1.0
+				{
+					return 1.0;
+				}
+				else
+				{
+					double result = 0.0;
+					//calculate y * ln(x)
+					double temp = y * CalculatorFunctions.ln(x);
+					result = CalculatorFunctions.EXP(temp,1);
+					return result;
+				}
 			}
 		}
-
-		return (-0.9999999999);
-
+		return(0.0);
+		
 	}
-
+	
 }
