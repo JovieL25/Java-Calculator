@@ -8,7 +8,7 @@ public class CalculatorFunctions {
 	private static final int precise = 10; // maxIterations for sin(x)
 	public static final double e = 2.718281828459; // hardcoded value for e
 	private static final double PI = 3.141592653589793; // hardcoded value for pi
-	protected static double exSum = 1;
+	protected static double exSum = 1; //exponential sum
 
 	/*
 	 * Function 1 Zhen's branch
