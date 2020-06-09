@@ -705,37 +705,50 @@ public class CalculatorFunctions {
 	 * @return result
 	 */
 	public static double xPowY(double x, double y) {
-		// x and y are both real numbers
+		// x and y are both real numbers  
 		// 1. special case when x = 0
-		if (x == 0) {
-			// 1. if y <= 0
-			if (y == 0 || y < 0) {
-				System.out.println("Math Error!");
-				return (-0.9999999999);// for now the value returned is just to indicate error
+		int test = (int)y;
+		if(y == test)
+		{
+			double result = 1.0;
+			for(int i = 0; i < y; i++) {
+				result = result * x;
 			}
-			// 2. if y > 0
-			if (y > 0) {
-				return 0.0;
-			}
+			return result;
 		}
-		// 2. if x is a negative real number or positive real number
-		else if (x > 0 || x < 0) {
-			if (y == 0)// exponential is zero always return 1.0
+		else {
+			if(x == 0)
 			{
-				return 1.0;
-			} else {
-				double result = 0.0;
-				// calculate y * ln(x)
-				double temp = y * CalculatorFunctions.ln(x);
-				result = CalculatorFunctions.EXP(temp, 1);
-				exSum=1;
-				return result;
-				// return Math.pow(x, y);
+				// 1. if y <= 0
+				if(y == 0 || y < 0)
+				{
+					System.out.println("Math Error!");
+				}
+				// 2. if y > 0
+				if(y > 0)
+				{
+					return 0.0;
+				}
+			}
+			//2. if x is a negative real number or positive real number
+			else if(x > 0 || x < 0)
+			{
+				if(y == 0)// exponential is zero always return 1.0
+				{
+					return 1.0;
+				}
+				else
+				{
+					double result = 0.0;
+					//calculate y * ln(x)
+					double temp = y * CalculatorFunctions.ln(x);
+					result = CalculatorFunctions.EXP(temp,1);
+					return result;
+				}
 			}
 		}
-
-		return (-0.9999999999);
-
+		return(0.0);
+		
 	}
 
 }
