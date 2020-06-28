@@ -1,4 +1,4 @@
-
+package project;
 
 import java.util.ArrayList;
 
@@ -7,9 +7,27 @@ public class CalculatorFunctions {
 	private static int maxIterations = 200; // Increase for higher precision outputs, for ln()
 	private static final double accuracy = 0.00001; // The accuracy for ln()
 	private static final int precise = 10; // maxIterations for sin(x)
-	public static final double e = 2.718281828459; // hardcoded value for e
-	private static final double PI = 3.141592653589793; // hardcoded value for pi
-	protected static double exSum = 1; //exponential sum
+	protected static double exSum = 1; // exponential sum
+
+	// nilakantha series for pi
+	public static double getPi() {
+		double pi = 3;
+		double denominator = 2;
+		for (int i = 0; i < 500; i++) {
+			if (i % 2 == 0)
+				pi += 4 / (denominator * ++denominator * ++denominator);
+			if (i % 2 == 1)
+				pi -= 4 / (denominator * ++denominator * ++denominator);
+		}
+		return pi;
+	}
+
+	// euler's number to get e
+	public static double getE() {
+		double e = 1 + 1.0 / 1000000;
+
+		return BuiltInFunctionImplementation.posPow(e, 1000000);
+	}
 
 	/*
 	 * Function 1 Zhen's branch
@@ -29,15 +47,15 @@ public class CalculatorFunctions {
 		double fac;
 		double input;
 
-		if ((x*PI/180)%PI== 0 )
-			 return 0;
+		if ((x * getPi() / 180) % getPi() == 0)
+			return 0;
 		else
-			input = (x * PI / 180)%(2*PI);
-		
-		if ((30*PI/180)% input== 0 ||(150*PI/180)%input== 0) // avoid some small inaccuracy
+			input = (x * getPi() / 180) % (2 * getPi());
+
+		if ((30 * getPi() / 180) % input == 0 || (150 * getPi() / 180) % input == 0) // avoid some small inaccuracy
 			return result = 0.5;
-		
-		if ( (210*PI/180)% input== 0 ||(330*PI/180)% input== 0)
+
+		if ((210 * getPi() / 180) % input == 0 || (330 * getPi() / 180) % input == 0)
 			return result = -0.5;
 
 		for (int i = 0; i <= precise; i++) {
@@ -65,14 +83,14 @@ public class CalculatorFunctions {
 		double input;
 		double fac;
 
-		if (x%PI== 0 )
-			 input = 0;
+		if (x % getPi() == 0)
+			input = 0;
 		else
-			
-			input = x %(2*PI);
+
+			input = x % (2 * getPi());
 
 		for (int i = 0; i <= 200; i++) {
-			fac = factorial(2*i+1);
+			fac = factorial(2 * i + 1);
 			result += BuiltInFunctionImplementation.posPow(-1.0, i)
 					* BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 		}
@@ -153,8 +171,6 @@ public class CalculatorFunctions {
 
 	}
 
-
-
 	//////////////////////////////////////////////////////////
 
 	/**
@@ -169,17 +185,16 @@ public class CalculatorFunctions {
 
 		double output = 0;
 
-		
 		double curValue = x - 1;
 		if (x < 0) {
-			//Could potentially implement error catching
+			// Could potentially implement error catching
 			System.out.println("MATH ERROR");
 			output = Integer.MIN_VALUE;
 			return output;
 		} else if (x < 1) {
 			// Using Taylor series approximation for values < 1 as trapezoidal sums diverge
 			// at ln(0)
-			
+
 			for (int i = 1; i < maxIterations; i++) {
 				output += BuiltInFunctionImplementation.posPow(-1, (i + 1) % 2) * curValue / i;
 				curValue *= x - 1;
@@ -187,8 +202,8 @@ public class CalculatorFunctions {
 		} else if (x == 1) {
 			output = 0;
 		} else if (x > 1) {
-			//Return 1 if x is very close to e
-			if (BuiltInFunctionImplementation.abs(x - e) <= accuracy) {
+			// Return 1 if x is very close to e
+			if (BuiltInFunctionImplementation.abs(x - getE()) <= accuracy) {
 				return 1;
 			}
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max
@@ -204,12 +219,14 @@ public class CalculatorFunctions {
 	//////////////////////////////////////////////////////////
 
 	/*
-	 * Function 4: e^x by Yilu Liang 
+	 * Function 4: e^x by Yilu Liang
 	 * 
 	 * when using this function maximum x = 113, result = 1.188812691963352E49
 	 * 
 	 * @param x the user input
+	 * 
 	 * @param n always 1
+	 * 
 	 * @return exponential results
 	 */
 	public static double EXP(double x, int n) {
@@ -226,16 +243,14 @@ public class CalculatorFunctions {
 	/*
 	 * Function 5: MAD by Xuan
 	 *
-	 * the string is first divided into several strings
-	 * then an arrayList is used to save the input of the user,
-	 * will write my own structure if this lib is not allowed.
-	 * the counter is used to get how many
-	 * numbers the user typed.
-	 * what to do next: add exceptions(input error),
-	 * allow user change their input before calculating
-	 * save the equation for further check(to be decide)
+	 * the string is first divided into several strings then an arrayList is used to
+	 * save the input of the user, will write my own structure if this lib is not
+	 * allowed. the counter is used to get how many numbers the user typed. what to
+	 * do next: add exceptions(input error), allow user change their input before
+	 * calculating save the equation for further check(to be decide)
 	 * 
 	 * @param str the user input
+	 * 
 	 * @return the MAD result
 	 */
 
@@ -259,7 +274,7 @@ public class CalculatorFunctions {
 		if (counter == 0)
 			result = 0;
 		else {
-			double avg =  total / counter;
+			double avg = total / counter;
 			for (int i = 0; i < list.size(); i++) {
 				difInTotal += BuiltInFunctionImplementation.abs(list.get(i) - avg);
 			}
@@ -282,7 +297,7 @@ public class CalculatorFunctions {
 
 		/* Degree to Radian */
 		if (isNumDegree) {
-			num = num * PI / 180;
+			num = num * getPi() / 180;
 		}
 
 		double sum = num;
@@ -307,7 +322,6 @@ public class CalculatorFunctions {
 
 	//////////////////////////////////////////////////////////
 
-
 	/**
 	 * Function 8: x^y by Shiyu Lin
 	 * 
@@ -316,53 +330,45 @@ public class CalculatorFunctions {
 	 * @return result
 	 */
 	public static double xPowY(double x, double y) {
-		// x and y are both real numbers  
+		// x and y are both real numbers
 		// 1. special case when x = 0
-		int test = (int)y;
-		if(y == test && y != 0 && x != 0)
-		{
+		int test = (int) y;
+		if (y == test && y != 0 && x != 0) {
 			double result = 1.0;
-			if(test < 0) {
-				x = 1/x;
+			if (test < 0) {
+				x = 1 / x;
 			}
-			for(int i = 0; i < BuiltInFunctionImplementation.abs(y); i++) {
+			for (int i = 0; i < BuiltInFunctionImplementation.abs(y); i++) {
 				result = result * x;
 			}
 			return result;
-		}
-		else {
-			if(x == 0)
-			{
+		} else {
+			if (x == 0) {
 				// 1. if y <= 0
-				if(y == 0 || y < 0)
-				{
+				if (y == 0 || y < 0) {
 					System.out.println("Math Error!");
 				}
 				// 2. if y > 0
-				if(y > 0)
-				{
+				if (y > 0) {
 					return 0.0;
 				}
 			}
-			//2. if x is a negative real number or positive real number
-			else if(x > 0 || x < 0)
-			{
-				if(y == 0)// exponential is zero always return 1.0
+			// 2. if x is a negative real number or positive real number
+			else if (x > 0 || x < 0) {
+				if (y == 0)// exponential is zero always return 1.0
 				{
 					return 1.0;
-				}
-				else
-				{
+				} else {
 					double result = 0.0;
-					//calculate y * ln(x)
+					// calculate y * ln(x)
 					double temp = y * CalculatorFunctions.ln(x);
-					result = CalculatorFunctions.EXP(temp,1);
+					result = CalculatorFunctions.EXP(temp, 1);
 					return result;
 				}
 			}
 		}
-		return(0.0);
-		
+		return (0.0);
+
 	}
-	
+
 }
