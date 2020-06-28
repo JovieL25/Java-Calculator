@@ -7,8 +7,26 @@ public class CalculatorFunctions {
 	private static int maxIterations = 200; // Increase for higher precision outputs, for ln()
 	private static final double accuracy = 0.00001; // The accuracy for ln()
 	private static final int precise = 10; // maxIterations for sin(x)
-	public static final double e = 2.718281828459; // hardcoded value for e
-	private static final double PI = 3.14159265359; // hardcoded value for pi
+
+	//nilakantha series for pi
+	public static double getPi() {
+		double pi = 3;
+		double denominator = 2;
+		for (int i = 0; i < 500; i++) {
+			if (i % 2 == 0)
+				pi += 4 / (denominator * ++denominator * ++denominator);
+			if (i % 2 == 1)
+				pi -= 4 / (denominator * ++denominator * ++denominator);
+		}
+		return pi;
+	}
+
+	//euler's number to get e
+	public static double getE() {
+		double e = 1 + 1.0 / 1000000;
+
+		return BuiltInFunctionImplementation.posPow(e, 1000000);
+	}
 
 	/*
 	 * Function 1 Zhen's branch
@@ -27,7 +45,7 @@ public class CalculatorFunctions {
 
 		double fac;
 
-		double input = x * PI / 180;
+		double input = x * getPi() / 180;
 
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
@@ -143,8 +161,6 @@ public class CalculatorFunctions {
 
 	}
 
-
-
 	//////////////////////////////////////////////////////////
 
 	/*
@@ -161,17 +177,16 @@ public class CalculatorFunctions {
 
 		double output = 0;
 
-		
 		double curValue = x - 1;
 		if (x < 0) {
-			//Could potentially implement error catching
+			// Could potentially implement error catching
 			System.out.println("MATH ERROR");
 			output = Integer.MIN_VALUE;
 			return output;
 		} else if (x < 1) {
 			// Using Taylor series approximation for values < 1 as trapezoidal sums diverge
 			// at ln(0)
-			
+
 			for (int i = 1; i < maxIterations; i++) {
 				output += BuiltInFunctionImplementation.posPow(-1, (i + 1) % 2) * curValue / i;
 				curValue *= x - 1;
@@ -179,8 +194,8 @@ public class CalculatorFunctions {
 		} else if (x == 1) {
 			output = 0;
 		} else if (x > 1) {
-			//Return 1 if x is very close to e
-			if (BuiltInFunctionImplementation.abs(x - e) <= accuracy) {
+			// Return 1 if x is very close to e
+			if (BuiltInFunctionImplementation.abs(x - getE()) <= accuracy) {
 				return 1;
 			}
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max
@@ -277,7 +292,7 @@ public class CalculatorFunctions {
 
 		/* Degree to Radian */
 		if (isNumDegree) {
-			num = num * PI / 180;
+			num = num * getPi() / 180;
 		}
 
 		double sum = num;

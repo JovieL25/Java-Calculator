@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.lang.Math;
 
 public class CalculatorInterface {
 
@@ -12,15 +13,8 @@ public class CalculatorInterface {
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
-			System.out.print("Please choose one of the following options "
-					+ "(0 to exit): " 
-					+ "\n\t1- sin(x)"
-					+ "\n\t2- 10^x" 
-					+ "\n\t3- ln(x)" 
-					+ "\n\t4- e^x" 
-					+ "\n\t5- MAD/STD" 
-					+ "\n\t6- sinh(x)" 
-					+ "\n\t7- x^y"
+			System.out.print("Please choose one of the following options " + "(0 to exit): " + "\n\t1- sin(x)"
+					+ "\n\t2- 10^x" + "\n\t3- ln(x)" + "\n\t4- e^x" + "\n\t5- MAD/STD" + "\n\t6- sinh(x)" + "\n\t7- x^y"
 					+ "\n\t8- math arithmetic\n>>>");
 			mainMenuInput = sc.nextInt();
 
@@ -133,7 +127,7 @@ public class CalculatorInterface {
 				break;
 
 			case 8:
-				keepGoing=true;
+				keepGoing = true;
 				String userinput;
 				while (keepGoing) { // user interface
 					System.out.print("Write your math equation\n>>>");
@@ -142,7 +136,7 @@ public class CalculatorInterface {
 						keepGoing = false;
 					} else
 						command_parser(userinput);
-					
+
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -162,8 +156,7 @@ public class CalculatorInterface {
 	 * process_paren to process the items in parentheses finally get the result by
 	 * using parse_command function
 	 * 
-	 * @param command
-	 *            string
+	 * @param command string
 	 */
 	public static void command_parser(String command) {
 		// remove all spaces in the user's command
@@ -188,8 +181,7 @@ public class CalculatorInterface {
 	 * structure of user's command we will process it differently It will use
 	 * parse_command function to compute items in the parentheses
 	 * 
-	 * @param command
-	 *            string return the value string after processed
+	 * @param command string return the value string after processed
 	 */
 	public static String process_paren(String str) {
 		// parens_check, check if parentheses are in good structures
@@ -223,8 +215,7 @@ public class CalculatorInterface {
 	/**
 	 * method parens_check check if the parentheses follow the correct structure
 	 * 
-	 * @param text
-	 *            string
+	 * @param text string
 	 * @return boolean true if the parenthese structure is correct
 	 */
 	public static boolean parens_check(String text) {
@@ -250,8 +241,7 @@ public class CalculatorInterface {
 	 * Then, we proceed to the left side of the equation or right side depends on
 	 * the position of parenthese.
 	 * 
-	 * @param command_list
-	 *            ArrayList contains arithmetic statment breaks into pieces
+	 * @param command_list ArrayList contains arithmetic statment breaks into pieces
 	 * @return middle String return the double value in string
 	 */
 	public static String process_paren(ArrayList<String> command_list) {
@@ -286,8 +276,7 @@ public class CalculatorInterface {
 	 * Notice that parenthese are already removed in the previous step process_paren
 	 * function.
 	 * 
-	 * @param user_command
-	 *            string contains arithmetic commands
+	 * @param user_command string contains arithmetic commands
 	 * @return user_command to a double value
 	 */
 	public static double parse_command(String user_command) {
@@ -299,7 +288,8 @@ public class CalculatorInterface {
 
 		String[] temp;
 		Pattern pattern_neg = Pattern.compile("(^\\-)\\d+(\\.\\d+)?");
-		Pattern pattern_mul_exp = Pattern.compile("(\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\\\d+)?)");
+		Pattern pattern_mul_exp = Pattern
+				.compile("(\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\\\d+)?)");
 		Pattern pattern_exp = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
 		Pattern pattern_mul = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\*(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
 		Pattern pattern_div = Pattern.compile("((\\-)?\\d+(\\.\\d+)?(E\\d+)?\\/(\\-)?\\d+(\\.\\d+)?(E\\d+)?)");
@@ -312,8 +302,8 @@ public class CalculatorInterface {
 		Matcher matcher_mul_exp = pattern_mul_exp.matcher(user_command);
 		while (matcher_mul_exp.find()) {
 			temp = matcher_mul_exp.group().split("\\*\\*");
-			user_command = user_command.replace(matcher_mul_exp.group(),
-					"**" + Double.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[1]), Double.parseDouble(temp[2]))));
+			user_command = user_command.replace(matcher_mul_exp.group(), "**" + Double
+					.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[1]), Double.parseDouble(temp[2]))));
 			// After replacing the first match to a double value, we have to work on the
 			// remaining
 			// This remind true for every condition
@@ -323,87 +313,83 @@ public class CalculatorInterface {
 		Matcher matcher_exp = pattern_exp.matcher(user_command);
 		while (matcher_exp.find()) {
 			temp = matcher_exp.group().split("\\*\\*");
-			user_command = user_command.replace(matcher_exp.group(),
-					Double.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]))));
+			user_command = user_command.replace(matcher_exp.group(), Double
+					.toString(CalculatorFunctions.XtoN(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]))));
 			matcher_exp = pattern_exp.matcher(user_command);
 		}
 
 		Matcher matcher_mul = pattern_mul.matcher(user_command);
 		Matcher matcher_div = pattern_div.matcher(user_command);
 		/*
-		 * Mul and Div have the same priorities
-		 * So we need to verify both's operation's position to determine which execute first
-		 * */
+		 * Mul and Div have the same priorities So we need to verify both's operation's
+		 * position to determine which execute first
+		 */
 		while (matcher_mul.find()) {
-			if(matcher_div.find()) {
+			if (matcher_div.find()) {
 				int mul_index = user_command.indexOf(matcher_mul.group());
 				int div_index = user_command.indexOf(matcher_div.group());
-				if(mul_index < div_index){
+				if (mul_index < div_index) {
 					temp = matcher_mul.group().split("\\*");
 					user_command = user_command.replace(matcher_mul.group(),
 							Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
 					matcher_mul = pattern_mul.matcher(user_command);
-				}
-				else {
+				} else {
 					temp = matcher_div.group().split("\\/");
 					user_command = user_command.replace(matcher_div.group(),
 							Double.toString(Double.parseDouble(temp[0]) / Double.parseDouble(temp[1])));
 					matcher_div = pattern_div.matcher(user_command);
-					
+
 					temp = matcher_mul.group().split("\\*");
 					user_command = user_command.replace(matcher_mul.group(),
 							Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
 					matcher_mul = pattern_mul.matcher(user_command);
 				}
-				
-			}
-			else {
+
+			} else {
 				temp = matcher_mul.group().split("\\*");
 				user_command = user_command.replace(matcher_mul.group(),
 						Double.toString(Double.parseDouble(temp[0]) * Double.parseDouble(temp[1])));
 				matcher_mul = pattern_mul.matcher(user_command);
 			}
 		}
-		
+
 		while (matcher_div.find()) {
 			temp = matcher_div.group().split("\\/");
 			user_command = user_command.replace(matcher_div.group(),
 					Double.toString(Double.parseDouble(temp[0]) / Double.parseDouble(temp[1])));
 			matcher_div = pattern_div.matcher(user_command);
 		}
-		
-		
+
 		Matcher matcher_add = pattern_add.matcher(user_command);
 		Matcher matcher_sub = pattern_sub.matcher(user_command);
 		while (matcher_add.find()) {
-			if(matcher_sub.find()) {
+			if (matcher_sub.find()) {
 				int add_index = user_command.indexOf(matcher_add.group());
 				int sub_index = user_command.indexOf(matcher_sub.group());
-				
-				if(add_index<sub_index) {
+
+				if (add_index < sub_index) {
 					temp = matcher_add.group().split("\\+");
 					user_command = user_command.replace(matcher_add.group(),
 							Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
 					matcher_add = pattern_add.matcher(user_command);
-				}
-				else {
+				} else {
 					temp = matcher_sub.group().split("\\-");
-					int first=-1,second=-1;
-					for(int i =0;i<temp.length;i++)
-						if(temp[i].length()==0) {
-							temp[i+1]="-"+temp[i+1];
-							if(first==-1)
-								first=i+1;
+					int first = -1, second = -1;
+					for (int i = 0; i < temp.length; i++)
+						if (temp[i].length() == 0) {
+							temp[i + 1] = "-" + temp[i + 1];
+							if (first == -1)
+								first = i + 1;
 							else
-								second=i+1;
+								second = i + 1;
 						}
-					if(first==-1)
+					if (first == -1)
 						user_command = user_command.replace(matcher_sub.group(),
 								Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[1])));
-					else if(second==-1)
-						if(first==1)
-							user_command = user_command.replace(matcher_sub.group(),
-									Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first+1])));
+					else if (second == -1)
+						if (first == 1)
+							user_command = user_command.replace(matcher_sub.group(), Double
+									.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first + 1])));
 						else
 							user_command = user_command.replace(matcher_sub.group(),
 									Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[first])));
@@ -411,41 +397,40 @@ public class CalculatorInterface {
 						user_command = user_command.replace(matcher_sub.group(),
 								Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[second])));
 					matcher_sub = pattern_sub.matcher(user_command);
-					
+
 					temp = matcher_add.group().split("\\+");
 					user_command = user_command.replace(matcher_add.group(),
 							Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
 					matcher_add = pattern_add.matcher(user_command);
 				}
-			}
-			else {
+			} else {
 				temp = matcher_add.group().split("\\+");
 				user_command = user_command.replace(matcher_add.group(),
 						Double.toString(Double.parseDouble(temp[0]) + Double.parseDouble(temp[1])));
 				matcher_add = pattern_add.matcher(user_command);
 			}
-			
+
 		}
-		
+
 		while (matcher_sub.find()) {
-			//System.out.println(matcher_sub.group());
+			// System.out.println(matcher_sub.group());
 			temp = matcher_sub.group().split("\\-");
-			int first=-1,second=-1;
-			for(int i =0;i<temp.length;i++)
-				if(temp[i].length()==0) {
-					temp[i+1]="-"+temp[i+1];
-					if(first==-1)
-						first=i+1;
+			int first = -1, second = -1;
+			for (int i = 0; i < temp.length; i++)
+				if (temp[i].length() == 0) {
+					temp[i + 1] = "-" + temp[i + 1];
+					if (first == -1)
+						first = i + 1;
 					else
-						second=i+1;
+						second = i + 1;
 				}
-			if(first==-1)
+			if (first == -1)
 				user_command = user_command.replace(matcher_sub.group(),
 						Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[1])));
-			else if(second==-1)
-				if(first==1)
+			else if (second == -1)
+				if (first == 1)
 					user_command = user_command.replace(matcher_sub.group(),
-							Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first+1])));
+							Double.toString(Double.parseDouble(temp[first]) - Double.parseDouble(temp[first + 1])));
 				else
 					user_command = user_command.replace(matcher_sub.group(),
 							Double.toString(Double.parseDouble(temp[0]) - Double.parseDouble(temp[first])));
