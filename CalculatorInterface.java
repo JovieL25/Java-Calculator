@@ -31,7 +31,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.sinforR(x));
+					System.out.println(Sin.sinforR(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -60,7 +60,7 @@ public class CalculatorInterface {
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
-					System.out.println(CalculatorFunctions.ln(x));
+					System.out.println(Ln.ln(x));
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -74,7 +74,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.EXP(x, 1));
+					System.out.println(Exp.EXP(x, 1));
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -88,7 +88,7 @@ public class CalculatorInterface {
 					System.out.print("Enter the values, use \",\" to separate: ");
 					String x = sc.next();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.MAD(x));
+					System.out.println(Mean_absolute_deviation.MAD(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -103,7 +103,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.sinh(x, false));
+					System.out.println(Sinh.sinh(x, false));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();

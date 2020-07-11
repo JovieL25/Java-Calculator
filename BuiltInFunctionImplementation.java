@@ -2,7 +2,7 @@ package project;
 /* This class implements all the built-in functions we need in the Math library */
 public class BuiltInFunctionImplementation {
 	
-	private static int maxIterations = 200;
+	public static int maxIterations = 200;
 	public static final double e = getE();
 	public static final double PI = getPi();
 	public static final double accuracy = 0.00001; // The accuracy for ln()
