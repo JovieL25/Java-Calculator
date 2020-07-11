@@ -4,30 +4,10 @@ import java.util.ArrayList;
 
 public class CalculatorFunctions {
 
-	private static int maxIterations = 200; // Increase for higher precision outputs, for ln()
+	private static int maxIterations = 2000; // Increase for higher precision outputs, for ln()
 	private static final double accuracy = 0.00001; // The accuracy for ln()
 	private static final int precise = 10; // maxIterations for sin(x)
 	protected static double exSum = 1; // exponential sum
-
-	// nilakantha series for pi
-	public static double getPi() {
-		double pi = 3;
-		double denominator = 2;
-		for (int i = 0; i < 500; i++) {
-			if (i % 2 == 0)
-				pi += 4 / (denominator * ++denominator * ++denominator);
-			if (i % 2 == 1)
-				pi -= 4 / (denominator * ++denominator * ++denominator);
-		}
-		return pi;
-	}
-
-	// euler's number to get e
-	public static double getE() {
-		double e = 1 + 1.0 / 1000000;
-
-		return BuiltInFunctionImplementation.posPow(e, 1000000);
-	}
 
 	/*
 	 * Function 1 Zhen's branch
@@ -47,15 +27,15 @@ public class CalculatorFunctions {
 		double fac;
 		double input;
 
-		if ((x * getPi() / 180) % getPi() == 0)
+		if ((x * BuiltInFunctionImplementation.getPi() / 180) % BuiltInFunctionImplementation.getPi() == 0)
 			return 0;
 		else
-			input = (x * getPi() / 180) % (2 * getPi());
+			input = (x * BuiltInFunctionImplementation.getPi() / 180) % (2 * BuiltInFunctionImplementation.getPi());
 
-		if ((30 * getPi() / 180) % input == 0 || (150 * getPi() / 180) % input == 0) // avoid some small inaccuracy
+		if ((30 * BuiltInFunctionImplementation.getPi() / 180) % input == 0 || (150 * BuiltInFunctionImplementation.getPi() / 180) % input == 0) // avoid some small inaccuracy
 			return result = 0.5;
 
-		if ((210 * getPi() / 180) % input == 0 || (330 * getPi() / 180) % input == 0)
+		if ((210 * BuiltInFunctionImplementation.getPi() / 180) % input == 0 || (330 * BuiltInFunctionImplementation.getPi() / 180) % input == 0)
 			return result = -0.5;
 
 		for (int i = 0; i <= precise; i++) {
@@ -83,11 +63,11 @@ public class CalculatorFunctions {
 		double input;
 		double fac;
 
-		if (x % getPi() == 0)
+		if (x % BuiltInFunctionImplementation.getPi() == 0)
 			input = 0;
 		else
 
-			input = x % (2 * getPi());
+			input = x % (2 * BuiltInFunctionImplementation.getPi());
 
 		for (int i = 0; i <= 200; i++) {
 			fac = factorial(2 * i + 1);
@@ -203,7 +183,7 @@ public class CalculatorFunctions {
 			output = 0;
 		} else if (x > 1) {
 			// Return 1 if x is very close to e
-			if (BuiltInFunctionImplementation.abs(x - getE()) <= accuracy) {
+			if (BuiltInFunctionImplementation.abs(x - BuiltInFunctionImplementation.getE()) <= accuracy) {
 				return 1;
 			}
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max
@@ -297,7 +277,7 @@ public class CalculatorFunctions {
 
 		/* Degree to Radian */
 		if (isNumDegree) {
-			num = num * getPi() / 180;
+			num = num * BuiltInFunctionImplementation.getPi() / 180;
 		}
 
 		double sum = num;

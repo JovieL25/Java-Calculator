@@ -1,6 +1,26 @@
 package project;
 /* This class implements all the built-in functions we need in the Math library */
 public class BuiltInFunctionImplementation {
+	
+	// nilakantha series for pi
+	public static double getPi() {
+		double pi = 3;
+		double denominator = 2;
+		for (int i = 0; i < 500; i++) {
+			if (i % 2 == 0)
+				pi += 4 / (denominator * ++denominator * ++denominator);
+			if (i % 2 == 1)
+				pi -= 4 / (denominator * ++denominator * ++denominator);
+		}
+		return pi;
+	}
+
+	// euler's number to get e
+	public static double getE() {
+		double e = 1 + 1.0 / 1000000;
+
+		return BuiltInFunctionImplementation.posPow(e, 1000000);
+	}
 
 	/*
 	 * absolute function
