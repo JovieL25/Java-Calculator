@@ -1,19 +1,11 @@
-
+package project;
 
 import java.util.ArrayList;
 
 public class CalculatorFunctions {
 
 	private static int maxIterations = 200; // Increase for higher precision outputs, for ln()
-	private static final double accuracy = 0.00001; // The accuracy for ln()
-	private static final int precise = 10; // maxIterations for sin(x)
-	public static final double e = 2.718281828459; // hardcoded value for e
-	private static final double PI = 3.141592653589793; // hardcoded value for pi
 	protected static double exSum = 1; //exponential sum
-
-	/*
-	 * Function 1 Zhen's branch
-	 */
 
 	/**
 	 * 
@@ -29,18 +21,18 @@ public class CalculatorFunctions {
 		double fac;
 		double input;
 
-		if ((x*PI/180)%PI== 0 )
+		if ((x*BuiltInFunctionImplementation.PI/180)%BuiltInFunctionImplementation.PI== 0 )
 			 return 0;
 		else
-			input = (x * PI / 180)%(2*PI);
+			input = (x * BuiltInFunctionImplementation.PI / 180)%(2*BuiltInFunctionImplementation.PI);
 		
-		if ((30*PI/180)% input== 0 ||(150*PI/180)%input== 0) // avoid some small inaccuracy
+		if ((30*BuiltInFunctionImplementation.PI/180)% input== 0 ||(150*BuiltInFunctionImplementation.PI/180)%input== 0) // avoid some small inaccuracy
 			return result = 0.5;
 		
-		if ( (210*PI/180)% input== 0 ||(330*PI/180)% input== 0)
+		if ( (210*BuiltInFunctionImplementation.PI/180)% input== 0 ||(330*BuiltInFunctionImplementation.PI/180)% input== 0)
 			return result = -0.5;
 
-		for (int i = 0; i <= precise; i++) {
+		for (int i = 0; i <= BuiltInFunctionImplementation.precise; i++) {
 			fac = 1;
 			for (int j = 2; j <= 2 * i + 1; j++) {
 				fac *= j;
@@ -65,14 +57,14 @@ public class CalculatorFunctions {
 		double input;
 		double fac;
 
-		if (x%PI== 0 )
+		if (x%BuiltInFunctionImplementation.PI== 0 )
 			 input = 0;
 		else
 			
-			input = x %(2*PI);
+			input = x %(2*BuiltInFunctionImplementation.PI);
 
 		for (int i = 0; i <= 200; i++) {
-			fac = factorial(2*i+1);
+			fac = BuiltInFunctionImplementation.factorial(2*i+1);
 			result += BuiltInFunctionImplementation.posPow(-1.0, i)
 					* BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 		}
@@ -80,52 +72,11 @@ public class CalculatorFunctions {
 		return result;
 	}
 
-	//////////////////////////////////////////////////////////
-
 	/*
 	 * Function 2: 10^x by Jingyi Lin This class contains all methods required to
 	 * compute the TF 10^x The methods include XtoN ln isRational taylor_expand
 	 * factorial abs
 	 */
-
-	/**
-	 * method isRational determine
-	 * 
-	 * @param d can be an integer or rational number
-	 * @return true if d is rational
-	 */
-	public static boolean isRational(double d) {
-		return !(d % 1 == 0);
-	}
-
-	/**
-	 * method taylor_expand compute and return the taylor expansion of a^x
-	 * 
-	 * @param x the base number
-	 * @param n the exponent number
-	 * @return taylor expansion of the inputs
-	 */
-	public static double taylor_expand(double a, double x) {
-		double result = 1;
-		for (int i = 1; i < 13; i++) {
-			result += XtoN(x * ln(a), i) / factorial(i);
-		}
-		return result;
-	}
-
-	/**
-	 * method factorial compute and return the factorial(x)
-	 * 
-	 * @param x integer
-	 * @return x!
-	 */
-	public static double factorial(int x) {
-		if (x == 0 || x == 1)
-			return 1;
-		else
-			return x * factorial(x - 1);
-	}
-
 	/**
 	 * method XtoN compute and return the x^n
 	 * 
@@ -138,8 +89,8 @@ public class CalculatorFunctions {
 		 * if n is an integer, we can iterate to get the result if n is a rational
 		 * number, we have to use the taylor expansion
 		 */
-		if (isRational(n)) {
-			return taylor_expand(x, n);
+		if (BuiltInFunctionImplementation.isRational(n)) {
+			return BuiltInFunctionImplementation.taylor_expand(x, n);
 		} else if (n < 0)
 			return XtoN(1 / x, -n);
 		else if (n == 0)
@@ -153,10 +104,6 @@ public class CalculatorFunctions {
 
 	}
 
-
-
-	//////////////////////////////////////////////////////////
-
 	/**
 	 * Function 3: ln(x) by Derek Liu
 	 * 
@@ -168,8 +115,6 @@ public class CalculatorFunctions {
 	public static double ln(double x) {
 
 		double output = 0;
-
-		
 		double curValue = x - 1;
 		if (x < 0) {
 			//Could potentially implement error catching
@@ -188,7 +133,7 @@ public class CalculatorFunctions {
 			output = 0;
 		} else if (x > 1) {
 			//Return 1 if x is very close to e
-			if (BuiltInFunctionImplementation.abs(x - e) <= accuracy) {
+			if (BuiltInFunctionImplementation.abs(x - BuiltInFunctionImplementation.e) <= BuiltInFunctionImplementation.accuracy) {
 				return 1;
 			}
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max
@@ -200,8 +145,6 @@ public class CalculatorFunctions {
 		}
 		return output;
 	}
-
-	//////////////////////////////////////////////////////////
 
 	/*
 	 * Function 4: e^x by Yilu Liang 
@@ -221,7 +164,6 @@ public class CalculatorFunctions {
 		return EXP(x, n + 1); // n factorial
 	}
 
-	//////////////////////////////////////////////////////////
 
 	/*
 	 * Function 5: MAD by Xuan
@@ -238,7 +180,6 @@ public class CalculatorFunctions {
 	 * @param str the user input
 	 * @return the MAD result
 	 */
-
 	public static double MAD(String str) {
 		ArrayList<Double> list = new ArrayList<>();
 		int counter = 0;
@@ -269,7 +210,6 @@ public class CalculatorFunctions {
 
 	}
 
-	//////////////////////////////////////////////////////////
 
 	/**
 	 * Function 7: sinh by Ziqian
@@ -279,10 +219,9 @@ public class CalculatorFunctions {
 	 * @return sum
 	 */
 	public static double sinh(double num, boolean isNumDegree) {
-
 		/* Degree to Radian */
 		if (isNumDegree) {
-			num = num * PI / 180;
+			num = num * BuiltInFunctionImplementation.PI / 180;
 		}
 
 		double sum = num;
@@ -290,7 +229,7 @@ public class CalculatorFunctions {
 
 		/* Compute until the value of step is smaller than 9 decimal places */
 		int k = 2;
-		while (Double.compare(step >= 0 ? step : step * (-1), accuracy) > 0) {
+		while (Double.compare(step >= 0 ? step : step * (-1), BuiltInFunctionImplementation.accuracy) > 0) {
 			step = step * num * num / (k * (k + 1));
 			sum += step;
 
@@ -304,9 +243,6 @@ public class CalculatorFunctions {
 
 		return sum;
 	}
-
-	//////////////////////////////////////////////////////////
-
 
 	/**
 	 * Function 8: x^y by Shiyu Lin
