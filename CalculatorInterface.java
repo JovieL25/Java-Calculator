@@ -4,6 +4,7 @@ package project;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 /*
  * This class implements the interface functionality of the "eternity"
@@ -15,18 +16,18 @@ public class CalculatorInterface {
 	 * "history" is an array list which keeps track 
 	 * of user's math expression input and their results
 	 */
-	public static ArrayList<memory_node> history = new ArrayList<memory_node>();
-	
+	public static ArrayList<memory_node> history = new ArrayList<memory_node>(10);
+
 	/**
 	 * "rad" is a boolean value keep track of the output mode
 	 * (Degree vs Radius)
 	 */
 	public static boolean rad=false;
-	
+
 	public static void main(String[] args) {
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
-		
+
 		while (mainMenuInput != 0) {
 			if(rad)
 				System.out.println("Radius mode");
@@ -44,7 +45,7 @@ public class CalculatorInterface {
 					+ "\n\t8- Change Output mode(Radius vs Degree)"
 					+ "\n\t9- math arithmetic\n>>>");
 			mainMenuInput = sc.nextInt();
-
+			sc.nextLine();
 			switch (mainMenuInput) {
 			case 1:
 				boolean keepGoing = true;
@@ -52,7 +53,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					if(rad)
-					// replace with calculator function
+						// replace with calculator function
 						System.out.println(Sin.sinforR(x));
 					else
 						System.out.println(Sin.sin(x));
@@ -104,7 +105,7 @@ public class CalculatorInterface {
 					catch(Exception e) {
 						System.out.println(e.getMessage());
 					}
-					
+
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -164,31 +165,61 @@ public class CalculatorInterface {
 			case 8:
 				rad=true;
 				break;
-				
+
 			case 9:
 				keepGoing=true;
 				String userinput;
+				for(int i = 0;i<10;i++) {
+					history.add(new memory_node());
+				}
 				while (keepGoing) { // user interface
-					System.out.print("Write your math equation\n>>>");
-					userinput = sc.next();
+					System.out.print("Write \"ANS1-10\" for using previous result"
+							+ "\nWrite \"Show History\" to see the previous expression\""
+							+ "\nWrite your math equation\n>>>");
+					userinput = sc.nextLine();
+					//System.out.println(userinput);
 					double result;
 					if (userinput.contains("quit")) {
 						keepGoing = false;
 					} else {
-						try {
-							result = Shunting_yard_algorithm.shunting_yard_algorithm(userinput);
-							history.add(new memory_node(userinput,result));
-							System.out.println(history.get(history.size()-1).getResult());
+						//System.out.println(userinput.contains("Show History"));
+						if(userinput.contains("Show History")) {
+							for(int i = 0;i<memory_node.current_head;i++) {
+								System.out.println("At Index"+(i+1)+"\nExpression: "
+										+history.get(i).getExpression()+"\nResult: "+history.get(i).getResult()+"\n");
+							}
 						}
-						catch(Exception e){
-							System.out.println(e.getMessage());
+						else {
+							try {
+								if(userinput.contains("ANS")) {
+									for(int i = 10;i>0;i--) {
+										userinput=userinput.replace("ANS"+i, Double.toString(history.get(i-1).getResult()));
+									}
+								}
+								result = Shunting_yard_algorithm.shunting_yard_algorithm(userinput);
+								if(memory_node.current_head<10) {
+									history.get(memory_node.current_head).setExpression(userinput);
+									history.get(memory_node.current_head).setResult(result);
+									memory_node.current_head++;
+								}
+								else {
+									history.remove(0);
+									history.add(new memory_node(userinput,result));
+								}
+								System.out.println(history.get(memory_node.current_head-1).getResult());
+							}
+							catch(Exception e){
+								e.printStackTrace();
+							}
 						}
+
 					}
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
 						keepGoing = false;
 					}
+					sc.nextLine();
 				}
 				break;
 			}
@@ -201,5 +232,5 @@ public class CalculatorInterface {
 	public static boolean isnumber(String a) {
 		return a.matches("-?\\d+(\\.\\d+)?");
 	}
-	
+
 }

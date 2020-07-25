@@ -12,6 +12,17 @@ public class memory_node {
 	/**result stores the historical user's input math expression's result*/
 	private double result;
 	
+	/**current_head stores last item's index*/
+	public static int current_head=0;
+	
+	/**
+	 * Constructor function
+	 */
+	public memory_node() {
+		expression="";
+		result=-1;
+	}
+	
 	/**
 	 * Constructor function
 	 * @param a is the original math expression in string
