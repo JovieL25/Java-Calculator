@@ -74,6 +74,8 @@ public class Shunting_yard_algorithm {
 
 		//for each character in the expression
 		for(int i =0;i<filtered.length();i++) {
+			//System.out.println(number_stack);
+			//System.out.println(operation_stack);
 			//Get current character
 			head = filtered.substring(i, i+1);
 			if(head.contains(",")){
@@ -103,7 +105,7 @@ public class Shunting_yard_algorithm {
 						if(operation_index>-1)
 							operator_head = operation_stack.get(operation_index);
 						while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp)) 
-								&& !operator_head.contains("(") && !operator_head.contains("^")) {
+								&& !operator_head.contains("(") && !temp.contains("^")) {
 							if(determine_precedence(operator_head,temp)>=0) {
 								number_stack.add(operator_head);
 								operation_stack.remove(operation_index);
