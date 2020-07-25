@@ -1,12 +1,19 @@
+
 package project;
 
+/*
+ * This class implements the transcendental function, sinh(x) function
+ * @version clean_code branch July 2020
+ * @author Ziqian
+ */
 public class Sinh {
 
 	/**
-	 * Function 7: sinh by Ziqian
+	 * Function 7: sinh
 	 * 
-	 * @param num
-	 * @param isNumDegree
+	 * @param num user's input number
+	 * @param isNumDegree return radius result if isNumDegree is false, 
+	 * else return degree result
 	 * @return sum
 	 */
 	public static double sinh(double num, boolean isNumDegree) {

@@ -1,5 +1,11 @@
+
 package project;
 
+/*
+ * This class implements the transcendental function, sin(x) function
+ * @version clean_code branch July 2020
+ * @author Long Zhen
+ */
 public class Sin {
 
 	/**

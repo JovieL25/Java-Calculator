@@ -1,26 +1,45 @@
 package project;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.regex.Pattern;
 
+/*
+ * This class implements the math expression parser and evaluation algorithm
+ * @version clean_code branch July 2020
+ * @author Jingyi Lin
+ */
 public class Shunting_yard_algorithm {
-
+	
+	/**"operators" array stores possible operators and their precedence level same as their index*/
 	public static String[] operators = {"+-","*/","^"};
 
+	/**
+	 * isoperator function determines if a token is operators
+	 * operators includes "+,-,*,/,(,),^"
+	 */
 	public static boolean isoperator(String a) {
 		return Pattern.compile("[-+*/()^]").matcher(a).find();
 	}
+	
+	/**
+	 * isfunction function determines if a token is a function
+	 * determines by finding any alphabets in the token
+	 * */
 	public static boolean isfunction(String a){
 		return Pattern.compile("[a-z]").matcher(a).find();
 	}
-
+	
+	/** isnumber function determines if a token is a string
+	 * anything that is not a string or having the described pattern is a number*/
 	public static boolean isnumber(String a) {
 		return !((isoperator(a))||(isfunction(a))) || Pattern.compile("(^\\-)\\d+(\\.\\d+)?").matcher(a).find();
 	}
-
-	public static int determine_precedence(String operator_head,String temp) {
+	
+	/** determine_precedence function is a helper function
+	 *  that help determine the precedence between two tokens
+	 *  if first token have higher precedence, the returned result will be larger 0*/
+	public static int determine_precedence(String operator_head,String temp) throws Exception{
 		int temp_precedence=-1;
 		int operator_head_precedence=-1;
 
@@ -32,15 +51,17 @@ public class Shunting_yard_algorithm {
 		}
 
 		if(temp_precedence==-1 || operator_head_precedence==-1) {
-			//System.out.println(operator_head+" "+temp);
-			System.out.println("Error occured! Cannot determine the precedence");
-			return -1;
+			throw new Exception("Error occured! Cannot determine the precedence");
 		}
 		return operator_head_precedence-temp_precedence;
 	}
 
-	public static double shunting_yard_algorithm(String expression){
+	/** shunting yard algorithm takes a string and identify token.
+	 *  This function will call RPN get the final result of the math expression.
+	 */
+	public static double shunting_yard_algorithm(String expression) throws Exception{
 		String filtered = expression.replace(" ", "");
+		filtered = filtered.toLowerCase();
 		filtered = filtered.replace("pi", Double.toString(BuiltInFunctionImplementation.PI));
 		String head="";
 		boolean last_number=false;
@@ -76,13 +97,13 @@ public class Shunting_yard_algorithm {
 						operation_stack.add(temp);
 					}
 					else {
+						
 						int operation_index=operation_stack.size()-1;
 						String operator_head="";
-						if(operation_index>0)
+						if(operation_index>-1)
 							operator_head = operation_stack.get(operation_index);
-						while(operation_index>0 && (isoperator(operator_head) && isoperator(temp)) 
+						while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp)) 
 								&& !operator_head.contains("(") && !operator_head.contains("^")) {
-							//System.out.println(operator_head + " vs "+temp);
 							if(determine_precedence(operator_head,temp)>=0) {
 								number_stack.add(operator_head);
 								operation_stack.remove(operation_index);
@@ -90,15 +111,15 @@ public class Shunting_yard_algorithm {
 							else {
 								break;
 							}
+							if(operation_index==0)
+								break;
 							operator_head=operation_stack.get(--operation_index);
 						}
-						//System.out.println("After while loop "+temp);
 						operation_stack.add(temp);
 					}
 					last_operator = false;
 					temp = head;
 				}
-				//if it is first character
 				else if(temp.equals("")) {
 					temp=head;
 				}
@@ -108,8 +129,8 @@ public class Shunting_yard_algorithm {
 			}
 			else{
 				last_operator = true;
-				//System.out.println(head+" "+i);
 				if(head.equals("-") && (i==0 || (isoperator(filtered.substring(i-1, i)) && !filtered.substring(i-1, i).equals(")")))) {
+					operation_stack.add(temp);
 					last_number=true;
 					temp = "-";
 					last_operator=false;
@@ -129,6 +150,8 @@ public class Shunting_yard_algorithm {
 						while(!operator_head.contains("(")) {
 							number_stack.add(operator_head);
 							operation_stack.remove(operation_index);
+							if(operation_index==0)
+								throw new Exception("Error in the expression, parenthesis not matching");
 							operator_head = operation_stack.get(--operation_index);
 						}
 						operation_stack.remove(operation_index);
@@ -143,10 +166,10 @@ public class Shunting_yard_algorithm {
 					parenthesis = true;
 					int operation_index=operation_stack.size()-1;
 					String operator_head="";
-					if(operation_index>0)
+					if(operation_index>-1)
 						operator_head = operation_stack.get(operation_index);
 
-					while(operation_index>0 && (isoperator(operator_head) && isoperator(temp))
+					while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp))
 							&& !operator_head.contains("(") && !operator_head.contains("^")) {
 						if(determine_precedence(operator_head,temp)>=0) {
 							number_stack.add(operator_head);
@@ -155,6 +178,8 @@ public class Shunting_yard_algorithm {
 						else {
 							break;
 						}
+						if(operation_index==0)
+							break;
 						operator_head=operation_stack.get(--operation_index);
 					}
 					operation_stack.add(temp);
@@ -169,6 +194,8 @@ public class Shunting_yard_algorithm {
 					while(!operator_head.contains("(")) {
 						number_stack.add(operator_head);
 						operation_stack.remove(operation_index);
+						if(operation_index==0)
+							throw new Exception("Error in the expression, parenthesis not matching");
 						operator_head = operation_stack.get(--operation_index);
 					}
 					operation_stack.remove(operation_index);
@@ -201,13 +228,15 @@ public class Shunting_yard_algorithm {
 
 	}
 
-	public static double RPN(ArrayList<String> stack) {
+	/** RPN function determine the result of the math expression
+	 *  that is in reverse polish notation. 
+	 *  Shunting yard algorithm transfer a normal math expression to reverse polish notation.
+	 */
+	public static double RPN(ArrayList<String> stack) throws Exception{
 		Deque<Double> processing_stack = new ArrayDeque<Double>();
 		int index=0;
 		double temp1,temp2;
 		while(stack.size()>0) {
-			//System.out.println(stack);
-			//System.out.println(processing_stack);
 			if(stack.get(index).equals("")) {
 				stack.remove(index);
 				continue;
@@ -216,7 +245,6 @@ public class Shunting_yard_algorithm {
 				processing_stack.push(Double.parseDouble(stack.remove(index)));
 			}
 			else {
-				//System.out.println(stack.get(index));
 				switch(stack.get(index)) {
 				case "+":
 					temp1 = processing_stack.pop();
@@ -245,13 +273,16 @@ public class Shunting_yard_algorithm {
 					break;
 				case "sin":
 					temp1 = processing_stack.pop();
-					processing_stack.push(Sin.sin(temp1));
+					if(CalculatorInterface.rad)
+						processing_stack.push(Sin.sinforR(temp1));
+					else
+						processing_stack.push(Sin.sin(temp1));
 					break;
 				case "ln":
 					temp1 = processing_stack.pop();
 					processing_stack.push(Ln.ln(temp1));
 					break;
-				case "MAD":
+				case "mad":
 					String str_temp="";
 					while(processing_stack.size()>1) {
 						str_temp+=Double.toString(processing_stack.pop()) + ",";
@@ -259,9 +290,13 @@ public class Shunting_yard_algorithm {
 					str_temp+=Double.toString(processing_stack.pop());
 					processing_stack.push(Mean_absolute_deviation.MAD(str_temp));
 					break;
+				case "sinh":
+					temp1 = processing_stack.pop();
+					processing_stack.push(Sinh.sinh(temp1, !CalculatorInterface.rad));
+					break;
 				default:
 					System.out.println("Error!");
-					break;
+					throw new Exception("Operator not found");
 				}
 				stack.remove(index);
 			}

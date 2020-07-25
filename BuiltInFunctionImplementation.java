@@ -1,5 +1,11 @@
+/*
+ * BuiltInFunctionImplementation
+ * Version clean_code branch
+ * This class implements all the built-in functions we need in the Math library
+ */
+
 package project;
-/* This class implements all the built-in functions we need in the Math library */
+
 public class BuiltInFunctionImplementation {
 	
 	public static int maxIterations = 200;
@@ -151,7 +157,12 @@ public class BuiltInFunctionImplementation {
 		return output;
 	}
 	
-	public static double XtoN(double x, double n) {
+	/**
+	 * This function implements the transcendental function x^n
+	 * @version clean_code branch
+	 * @author Jingyi Lin
+	 * */
+	public static double XtoN(double x, double n) throws Exception{
 		/*
 		 * if n is an integer, we can iterate to get the result if n is a rational
 		 * number, we have to use the taylor expansion
@@ -163,9 +174,7 @@ public class BuiltInFunctionImplementation {
 		else if (n == 0) {
 			if(x>0)
 				return 1;
-			else
-				System.out.println("Math Error");
-			return 0;
+			throw new Exception("Math Error!");
 		}
 			
 		else if (n == 1)

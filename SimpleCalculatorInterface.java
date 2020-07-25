@@ -9,7 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
- 
+
+/*
+ * SimpleCalculatorInterface
+ * @version clean_code branch
+ * @author Yilu Liang
+ * This class implements the graphical interface of the eternity
+ */
 public class SimpleCalculatorInterface {
 	public static void main(String[] args) {
 		myFrame frame = new myFrame();

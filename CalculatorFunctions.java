@@ -1,3 +1,9 @@
+/*
+ * CalculatorFunctions
+ * Version 1.1 (not updated)
+ * This class implements calculator functions
+ */
+
 package project;
 
 import java.util.ArrayList;
@@ -11,7 +17,7 @@ public class CalculatorFunctions {
 	 */
 	/**
 	 * method XtoN compute and return the x^n
-	 * 
+	 * @author Jingyi Lin
 	 * @param x double
 	 * @param n double could be integer or rational number
 	 * @return x^n
@@ -84,7 +90,12 @@ public class CalculatorFunctions {
 					double result = 0.0;
 					//calculate y * ln(x)
 					double temp = y * BuiltInFunctionImplementation.ln(x);
-					result = Exp.EXP(temp,1);
+					try {
+						result = Exp.EXP(temp,1);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					return result;
 				}
 			}

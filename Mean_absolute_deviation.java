@@ -1,7 +1,13 @@
-package project;
 
+
+package project;
 import java.util.ArrayList;
 
+/*
+ * This class implements the transcendental function,MAD function
+ * @version clean_code branch July 2020
+ * @author Xuan
+ */
 public class Mean_absolute_deviation {
 
 	/*
@@ -24,7 +30,6 @@ public class Mean_absolute_deviation {
 		int counter = 0;
 		double total = 0;
 		double difInTotal = 0;
-
 		if (str.equals(""))
 			return 0;
 		double result = 0;

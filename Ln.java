@@ -1,17 +1,20 @@
 package project;
 
+/*
+ * This class implements the transcendental function, ln(x) function 
+ * @version clean_code branch July 2020
+ * @author Derek Liu
+ */
 public class Ln {
 	
 	/**
-	 * Function 3: ln(x) by Derek Liu
-	 * 
+	 * Function 3: ln(x)
 	 * method ln uses Talyor series approximations to find the value of ln(x)
 	 * 
-	 * @param x
+	 * @param x is user input
 	 * @return output
 	 */
 	public static double ln(double x) {
-
 		double output = 0;
 		double curValue = x - 1;
 		if (x < 0) {
