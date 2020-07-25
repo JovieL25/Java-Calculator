@@ -140,7 +140,7 @@ public class CalculatorInterface {
 					if (userinput.contains("quit")) {
 						keepGoing = false;
 					} else
-						command_parser(userinput);
+						Shunting_yard_algorithm.shunting_yard_algorithm(userinput);
 					
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -156,6 +156,27 @@ public class CalculatorInterface {
 		sc.close();
 	}
 
+	public static boolean isnumber(String a) {
+		return a.matches("-?\\d+(\\.\\d+)?");
+	}
+	public static void shunting_yard_algorithm(String expression){
+		String filtered = expression.replace(" ", "");
+		String head="";
+		int index=0;
+		ArrayList<String> number_stack = new ArrayList<String>();
+		ArrayList<String> operation_stack = new ArrayList<String>();
+		for(int i =0;i<filtered.length();i++) {
+			head = filtered.substring(i, i+1);
+			if(head.equals(".") || isnumber(head)) {
+				number_stack.add(number_stack.get(i++)+head);
+			}
+			else
+				operation_stack.add(head);
+		}
+		
+		
+	}
+	
 	/**
 	 * method command_parser will filter user's command, then first use
 	 * process_paren to process the items in parentheses finally get the result by
