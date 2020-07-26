@@ -6,7 +6,7 @@ public class CalculatorFunctions {
 
 	private static int maxIterations = 2000; // Increase for higher precision outputs, for ln()
 	private static final double accuracy = 0.00001; // The accuracy for ln()
-	private static final int precise = 10; // maxIterations for sin(x)
+	private static final int precise = 20; // maxIterations for sin(x)
 	protected static double exSum = 1; // exponential sum
 
 	/*
@@ -31,13 +31,16 @@ public class CalculatorFunctions {
 			return 0;
 		else
 			input = (x * BuiltInFunctionImplementation.getPi() / 180) % (2 * BuiltInFunctionImplementation.getPi());
-
+		
+		//What is this for???
+		/*
+		 *
 		if ((30 * BuiltInFunctionImplementation.getPi() / 180) % input == 0 || (150 * BuiltInFunctionImplementation.getPi() / 180) % input == 0) // avoid some small inaccuracy
 			return result = 0.5;
 
 		if ((210 * BuiltInFunctionImplementation.getPi() / 180) % input == 0 || (330 * BuiltInFunctionImplementation.getPi() / 180) % input == 0)
 			return result = -0.5;
-
+		 */
 		for (int i = 0; i <= precise; i++) {
 			fac = 1;
 			for (int j = 2; j <= 2 * i + 1; j++) {
@@ -66,15 +69,13 @@ public class CalculatorFunctions {
 		if (x % BuiltInFunctionImplementation.getPi() == 0)
 			input = 0;
 		else
-
 			input = x % (2 * BuiltInFunctionImplementation.getPi());
 
-		for (int i = 0; i <= 200; i++) {
+		for (int i = 0; i <= precise; i++) {
 			fac = factorial(2 * i + 1);
 			result += BuiltInFunctionImplementation.posPow(-1.0, i)
 					* BuiltInFunctionImplementation.posPow(input, 2 * i + 1) / fac;
 		}
-
 		return result;
 	}
 
@@ -105,7 +106,7 @@ public class CalculatorFunctions {
 	 */
 	public static double taylor_expand(double a, double x) {
 		double result = 1;
-		for (int i = 1; i < 13; i++) {
+		for (int i = 1; i < precise; i++) {
 			result += XtoN(x * ln(a), i) / factorial(i);
 		}
 		return result;

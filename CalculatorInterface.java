@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 public class CalculatorInterface {
 
 	public static void main(String[] args) {
+		System.out.println(CalculatorFunctions.EXP(1, 1));
+		System.out.println(Math.pow(Math.E, 2));
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
