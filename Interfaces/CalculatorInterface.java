@@ -11,7 +11,7 @@ import TFs.Ln;
 import TFs.Mean_absolute_deviation;
 import TFs.Sin;
 import TFs.Sinh;
-import project.CalculatorFunctions;
+import TFs.XtoN;
 import project.Shunting_yard_algorithm;
 import project.memory_node;
 
@@ -80,7 +80,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.XtoN(10, x));
+					System.out.println(XtoN.Xton(10, x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -161,7 +161,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of y: ");
 					int y = sc.nextInt();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.xPowY(x, y));
+					System.out.println(XtoN.Xton(x, y));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();

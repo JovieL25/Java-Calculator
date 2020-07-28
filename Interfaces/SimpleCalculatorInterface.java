@@ -30,16 +30,17 @@ import javax.swing.JOptionPane;
 /*
  * SimpleCalculatorInterface
  * @version clean_code branch
- * @author Yilu Liang, Jingyi Lin
+ * @author Jingyi Lin, Yilu Liang
  * This class implements the graphical interface of the eternity
  */
 public class SimpleCalculatorInterface {
 
 	public static boolean rad=true;
-	
+
 	public static void main(String[] args) {
 		myFrame frame = new myFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//close the window
+		frame.setPreferredSize(new Dimension(1600,1600));
 		frame.setVisible(true);
 	}
 }
@@ -58,17 +59,18 @@ class myPanel extends JPanel {
 	JTextField display,display2,display3; //display result
 	JPanel panel1,panel2,panel3;//panel1
 	String nowButton;//current button being pressed
-	
+
 	boolean equal = false,TF = false;
 	ArrayList<memory_node> history = new ArrayList<memory_node>(10);
 	ArrayList<JButton> Buttons = new ArrayList<JButton>();
-	String[] TFs = {"sin(x)","10^x","ln(x)","e^x","MAD","sinh(x)","x^y"};
+	String[] TFs = {"sin(x)","10^x","ln(x)","e^x",
+			"mad","sinh(x)","x^y","cos(x)","tan(x)"};
 
 	public myPanel(myFrame parent) {
 		panel3 = new JPanel();
 		panel3.setLayout(new BorderLayout(3,1));
-		
-		
+
+
 		for(int i = 0;i<10;i++) {
 			history.add(new memory_node());
 		}
@@ -76,33 +78,39 @@ class myPanel extends JPanel {
 
 		//add display text area
 		display = new JTextField("");
-		display.setPreferredSize(new Dimension(40,60));
+		display.setPreferredSize(new Dimension(200,100));
 		display.setEnabled(true);
+		Font f;
+		f = new Font("input font", Font.PLAIN, 20);
+		display.setFont(f);
 
 		display2 = new JTextField("Radius mode");
 		display2.setEnabled(false);
-		display2.setPreferredSize(new Dimension(10,20));
-
+		display2.setPreferredSize(new Dimension(5,20));
+		
 		display3 = new JTextField("Result");
 		display3.setEnabled(false);
-		display3.setPreferredSize(new Dimension(40,60));
+		display3.setPreferredSize(new Dimension(200,100));
+		display3.setFont(f);
 
 		ActionListener command = new commandAction();
 		JButton button = new JButton("Help");
 		button.addActionListener(command);
+		button.setPreferredSize(new Dimension(40,40));
 		panel3.add(button,BorderLayout.LINE_START);
-		
+
 		//panel1 have the textfield for userinput ouput.
 		panel1 = new JPanel();
 		panel1.setLayout(new BorderLayout(3,1));
-		
+
 		//panel2 have all the buttons
 		panel2 = new JPanel();
-		panel2.setLayout(new GridLayout(7, 4));
+		panel2.setLayout(new GridLayout(0, 4));
 
 		panel1.add(display2, BorderLayout.PAGE_START);
 		panel1.add(display,BorderLayout.CENTER);
 		panel1.add(display3,BorderLayout.SOUTH);
+		panel1.setPreferredSize(new Dimension(450,200));
 
 		display.addKeyListener(new KeyListener(){
 
@@ -137,6 +145,9 @@ class myPanel extends JPanel {
 	public void addButton1(String label ,ActionListener listener) {
 
 		JButton button = new JButton(label);
+		button.setPreferredSize(new Dimension(80,40));
+		if(label.equals(""))
+			button.setVisible(false);
 		button.addActionListener(listener);
 		panel2.add(button,BorderLayout.LINE_START);
 		Buttons.add(button);
@@ -147,6 +158,7 @@ class myPanel extends JPanel {
 			}
 		}
 
+
 	}
 
 	//event listener
@@ -154,7 +166,7 @@ class myPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			nowButton = event.getActionCommand();
-			if(nowButton.equals("RAD")){
+			if(nowButton.equals("Rad/Deg")){
 				SimpleCalculatorInterface.rad=!SimpleCalculatorInterface.rad;
 				if(SimpleCalculatorInterface.rad)
 					display2.setText("Radius mode");
@@ -188,6 +200,13 @@ class myPanel extends JPanel {
 				}
 
 			}
+			else if(nowButton.equals("Help")){
+				JOptionPane.showMessageDialog(null, "Help message here");
+			}
+			else if(nowButton.equals("\u221A"))
+				display.setText(display.getText() + "sqrt(x)");
+			else if(nowButton.equals("\u03c0"))
+				display.setText(display.getText() + "pi");
 			else if (nowButton != "=") {
 				if(equal){
 					display3.setText("");
@@ -213,12 +232,16 @@ class myPanel extends JPanel {
 
 	public void addbuttons(ActionListener command){
 		addButton1("sin(x)", command);
+		addButton1("cos(x)", command);
+		addButton1("tan(x)", command);
 		addButton1("10^x", command);
 		addButton1("ln(x)", command);
 		addButton1("e^x", command);
 		addButton1("mad", command);
 		addButton1("sinh(x)", command);
 		addButton1("x^y", command);
+		addButton1("fact(x)", command);
+		addButton1("Rad/Deg",command);
 		addButton1("TF mode",command);
 
 		addButton1("7", command);
@@ -245,10 +268,10 @@ class myPanel extends JPanel {
 		addButton1("/", command);
 
 
-
-		addButton1("Result",command);
-		addButton1("RAD",command);
+		addButton1("\u221A",command);
+		addButton1("\u03c0", command);
 		addButton1("=", command);
+		addButton1("Result",command);
 
 	}
 

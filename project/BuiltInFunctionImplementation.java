@@ -6,6 +6,8 @@
 
 package project;
 
+import TFs.Ln;
+
 public class BuiltInFunctionImplementation {
 	
 	public static int maxIterations = 200;
@@ -28,9 +30,15 @@ public class BuiltInFunctionImplementation {
 	}
 
 	// euler's number to get e
-	public static double getE() {
+	public static double getE(){
 		double e = 1 + 1.0 / 1000000;
-		return BuiltInFunctionImplementation.XtoN(e, 1000000);
+		try {
+			return BuiltInFunctionImplementation.XtoN(e, 1000000);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			System.out.println("Cannot get E");
+		}
+		return 0;
 	}
 
 	/*
@@ -106,11 +114,12 @@ public class BuiltInFunctionImplementation {
 	 * @param x the base number
 	 * @param n the exponent number
 	 * @return taylor expansion of the inputs
+	 * @throws Exception 
 	 */
-	public static double taylor_expand(double a, double x) {
+	public static double taylor_expand(double a, double x) throws Exception {
 		double result = 1;
-		for (int i = 1; i < 13; i++) {
-			result += CalculatorFunctions.XtoN(x * ln(a), i) / factorial(i);
+		for (int i = 1; i < maxIterations; i++) {
+			result += TFs.XtoN.Xton(x * Ln.ln2(a), i) / factorial(i);
 		}
 		return result;
 	}
@@ -122,8 +131,9 @@ public class BuiltInFunctionImplementation {
 	 * 
 	 * @param x
 	 * @return output
+	 * @throws Exception 
 	 */
-	public static double ln(double x) {
+	public static double ln(double x) throws Exception {
 
 		double output = 0;
 		double curValue = x - 1;
@@ -161,8 +171,9 @@ public class BuiltInFunctionImplementation {
 	 * This function implements the transcendental function x^n
 	 * @version clean_code branch
 	 * @author Jingyi Lin
+	 * @throws Exception 
 	 * */
-	public static double XtoN(double x, double n){
+	public static double XtoN(double x, double n) throws Exception{
 		/*
 		 * if n is an integer, we can iterate to get the result if n is a rational
 		 * number, we have to use the taylor expansion

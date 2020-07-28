@@ -8,7 +8,7 @@ package TFs;
 import project.BuiltInFunctionImplementation;
 
 public class Ten_to_x {
-	public static double ten_to_x(double x){
+	public static double ten_to_x(double x) throws Exception{
 		return BuiltInFunctionImplementation.XtoN(10, x);
 	}
 }

@@ -13,6 +13,7 @@ import TFs.Mean_absolute_deviation;
 import TFs.Sin;
 import TFs.Sinh;
 import TFs.Tan;
+import TFs.XtoN;
 
 /*
  * This class implements the math expression parser and evaluation algorithm
@@ -81,7 +82,7 @@ public class Shunting_yard_algorithm {
 
 		ArrayList<String> number_stack = new ArrayList<String>();
 		ArrayList<String> operation_stack = new ArrayList<String>();
-
+		
 		//for each character in the expression
 		for(int i =0;i<filtered.length();i++) {
 			//System.out.println(number_stack);
@@ -141,7 +142,26 @@ public class Shunting_yard_algorithm {
 			}
 			else{
 				last_operator = true;
-				if(head.equals("-") && (i==0 || (isoperator(filtered.substring(i-1, i)) && !filtered.substring(i-1, i).equals(")")))) {
+				if(head.equals("-") && (i==0 || (isoperator(filtered.substring(i-1, i)) 
+						&& !filtered.substring(i-1, i).equals(")")))) {
+					int operation_index=operation_stack.size()-1;
+					String operator_head="";
+					if(operation_index>-1)
+						operator_head = operation_stack.get(operation_index);
+					while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp)) 
+							&& !operator_head.contains("(") && !temp.contains("^")) {
+						if(determine_precedence(operator_head,temp)>=0) {
+							number_stack.add(operator_head);
+							operation_stack.remove(operation_index);
+						}
+						else {
+							break;
+						}
+						if(operation_index==0)
+							break;
+						operator_head=operation_stack.get(--operation_index);
+					}
+					
 					operation_stack.add(temp);
 					last_number=true;
 					temp = "-";
@@ -182,7 +202,7 @@ public class Shunting_yard_algorithm {
 						operator_head = operation_stack.get(operation_index);
 
 					while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp))
-							&& !operator_head.contains("(") && !operator_head.contains("^")) {
+							&& !operator_head.contains("(") && !temp.contains("^")) {
 						if(determine_precedence(operator_head,temp)>=0) {
 							number_stack.add(operator_head);
 							operation_stack.remove(operation_index);
@@ -245,6 +265,7 @@ public class Shunting_yard_algorithm {
 	 *  Shunting yard algorithm transfer a normal math expression to reverse polish notation.
 	 */
 	public static double RPN(ArrayList<String> stack) throws Exception{
+		System.out.println(stack);
 		Deque<Double> processing_stack = new ArrayDeque<Double>();
 		int index=0;
 		double temp1,temp2;
@@ -324,7 +345,16 @@ public class Shunting_yard_algorithm {
 					else
 						processing_stack.push(Tan.tan(temp1));
 					break;
+				case "fact":
+					temp1=processing_stack.pop();
+					processing_stack.push(BuiltInFunctionImplementation.factorial((int)temp1));
+					break;
+				case "sqrt":
+					temp1=processing_stack.pop();
+					processing_stack.push(XtoN.Xton(temp1, 0.5));
+					break;
 				default:
+					System.out.println(stack.get(index));
 					System.out.println("Error!");
 					throw new Exception("Unrecoginzed operators or functions");
 				}
