@@ -1,7 +1,9 @@
 
 
-package project;
+package TFs;
 import java.util.ArrayList;
+
+import project.BuiltInFunctionImplementation;
 
 /*
  * This class implements the transcendental function,MAD function

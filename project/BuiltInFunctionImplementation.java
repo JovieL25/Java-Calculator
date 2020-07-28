@@ -30,7 +30,7 @@ public class BuiltInFunctionImplementation {
 	// euler's number to get e
 	public static double getE() {
 		double e = 1 + 1.0 / 1000000;
-		return BuiltInFunctionImplementation.posPow(e, 1000000);
+		return BuiltInFunctionImplementation.XtoN(e, 1000000);
 	}
 
 	/*
@@ -137,7 +137,7 @@ public class BuiltInFunctionImplementation {
 			// at ln(0)
 			
 			for (int i = 1; i < maxIterations; i++) {
-				output += BuiltInFunctionImplementation.posPow(-1, (i + 1) % 2) * curValue / i;
+				output += BuiltInFunctionImplementation.XtoN(-1, (i + 1) % 2) * curValue / i;
 				curValue *= x - 1;
 			}
 		} else if (x == 1) {
@@ -151,7 +151,7 @@ public class BuiltInFunctionImplementation {
 			// number of iterations
 			double base = (x - 1) / x;
 			for (int i = 1; i < maxIterations; i++) {
-				output += BuiltInFunctionImplementation.posPow(base, i) / i;
+				output += BuiltInFunctionImplementation.XtoN(base, i) / i;
 			}
 		}
 		return output;
@@ -162,7 +162,7 @@ public class BuiltInFunctionImplementation {
 	 * @version clean_code branch
 	 * @author Jingyi Lin
 	 * */
-	public static double XtoN(double x, double n) throws Exception{
+	public static double XtoN(double x, double n){
 		/*
 		 * if n is an integer, we can iterate to get the result if n is a rational
 		 * number, we have to use the taylor expansion
@@ -172,9 +172,7 @@ public class BuiltInFunctionImplementation {
 		} else if (n < 0)
 			return XtoN(1 / x, -n);
 		else if (n == 0) {
-			if(x>0)
-				return 1;
-			throw new Exception("Math Error!");
+			return 1;	
 		}
 			
 		else if (n == 1)

@@ -1,5 +1,8 @@
 
-package project;
+package TFs;
+
+import project.BuiltInFunctionImplementation;
+
 /*
  * This class implements the transcendental function, exponential function 
  * @version clean_code branch July 2020

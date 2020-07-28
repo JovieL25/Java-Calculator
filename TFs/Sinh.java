@@ -1,5 +1,7 @@
 
-package project;
+package TFs;
+
+import project.BuiltInFunctionImplementation;
 
 /*
  * This class implements the transcendental function, sinh(x) function

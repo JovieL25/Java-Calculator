@@ -1,8 +1,18 @@
 package project;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.regex.Pattern;
+
+import Interfaces.SimpleCalculatorInterface;
+import TFs.Cos;
+import TFs.Exp;
+import TFs.Ln;
+import TFs.Mean_absolute_deviation;
+import TFs.Sin;
+import TFs.Sinh;
+import TFs.Tan;
 
 /*
  * This class implements the math expression parser and evaluation algorithm
@@ -275,7 +285,7 @@ public class Shunting_yard_algorithm {
 					break;
 				case "sin":
 					temp1 = processing_stack.pop();
-					if(CalculatorInterface.rad)
+					if(SimpleCalculatorInterface.rad)
 						processing_stack.push(Sin.sinforR(temp1));
 					else
 						processing_stack.push(Sin.sin(temp1));
@@ -294,11 +304,29 @@ public class Shunting_yard_algorithm {
 					break;
 				case "sinh":
 					temp1 = processing_stack.pop();
-					processing_stack.push(Sinh.sinh(temp1, !CalculatorInterface.rad));
+					processing_stack.push(Sinh.sinh(temp1, !SimpleCalculatorInterface.rad));
+					break;
+				case "exp":
+					temp1 = processing_stack.pop();
+					processing_stack.push(Exp.EXP(temp1, 1));
+					break;
+				case "cos":
+					temp1 = processing_stack.pop();
+					if(SimpleCalculatorInterface.rad)
+						processing_stack.push(Cos.cosforR(temp1));
+					else
+						processing_stack.push(Cos.cos(temp1));
+					break;
+				case "tan":
+					temp1 = processing_stack.pop();
+					if(SimpleCalculatorInterface.rad)
+						processing_stack.push(Tan.tanforR(temp1));
+					else
+						processing_stack.push(Tan.tan(temp1));
 					break;
 				default:
 					System.out.println("Error!");
-					throw new Exception("Operator not found");
+					throw new Exception("Unrecoginzed operators or functions");
 				}
 				stack.remove(index);
 			}

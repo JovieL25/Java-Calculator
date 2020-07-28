@@ -1,10 +1,19 @@
 
-package project;
+package Interfaces;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Pattern;
+
+import TFs.Exp;
+import TFs.Ln;
+import TFs.Mean_absolute_deviation;
+import TFs.Sin;
+import TFs.Sinh;
+import project.CalculatorFunctions;
+import project.Shunting_yard_algorithm;
+import project.memory_node;
 
 /*
  * This class implements the interface functionality of the "eternity"

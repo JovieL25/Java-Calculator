@@ -8,6 +8,8 @@ package project;
 
 import java.util.ArrayList;
 
+import TFs.Exp;
+
 public class CalculatorFunctions {
 
 	/*
