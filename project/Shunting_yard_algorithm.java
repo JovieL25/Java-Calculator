@@ -1,5 +1,6 @@
 package project;
 
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -302,7 +303,7 @@ public class Shunting_yard_algorithm {
 				case "^":
 					temp1 = processing_stack.pop();
 					temp2 = processing_stack.pop();
-					processing_stack.push(BuiltInFunctionImplementation.XtoN(temp2, temp1));
+					processing_stack.push(XtoN.Xton(temp2, temp1));
 					break;
 				case "sin":
 					temp1 = processing_stack.pop();

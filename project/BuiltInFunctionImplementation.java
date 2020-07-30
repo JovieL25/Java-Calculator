@@ -62,8 +62,7 @@ public class BuiltInFunctionImplementation {
 	 * @param the input number
 	 * @return the factorial result
 	 * */
-	public static double factorial(int x)
-	{
+	public static double factorial(int x) throws Exception{
 		if(x > 0) {
 			double result = 1;
 			for(int i = 1; i <= x; i++) {
@@ -74,7 +73,9 @@ public class BuiltInFunctionImplementation {
 		if(x == 0) {
 			return 1.0;
 		}
-		return 0;
+		
+		throw new Exception("Factorial input out of range");
+		
 	}
 	
 	/* positive integer power function

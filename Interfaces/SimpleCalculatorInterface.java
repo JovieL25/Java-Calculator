@@ -64,11 +64,11 @@ class myPanel extends JPanel {
 	ArrayList<memory_node> history = new ArrayList<memory_node>(10);
 	ArrayList<JButton> Buttons = new ArrayList<JButton>();
 	String[] TFs = {"sin(x)","10^x","ln(x)","e^x",
-			"mad","sinh(x)","x^y","cos(x)","tan(x)"};
+			"MAD","sinh(x)","x^y","cos(x)","tan(x)"};
 
 	public myPanel(myFrame parent) {
 		panel3 = new JPanel();
-		panel3.setLayout(new BorderLayout(3,1));
+		panel3.setLayout(new GridLayout(0, 5));
 
 
 		for(int i = 0;i<10;i++) {
@@ -142,14 +142,14 @@ class myPanel extends JPanel {
 
 	}
 
-	public void addButton1(String label ,ActionListener listener) {
+	public void addButton1(String label ,ActionListener listener,JPanel panel) {
 
 		JButton button = new JButton(label);
 		button.setPreferredSize(new Dimension(80,40));
 		if(label.equals(""))
 			button.setVisible(false);
 		button.addActionListener(listener);
-		panel2.add(button,BorderLayout.LINE_START);
+		panel.add(button,BorderLayout.LINE_START);
 		Buttons.add(button);
 		for(String c : TFs){
 			if(label.equals(c)){
@@ -160,6 +160,7 @@ class myPanel extends JPanel {
 
 
 	}
+	
 
 	//event listener
 	class commandAction implements ActionListener {
@@ -213,7 +214,11 @@ class myPanel extends JPanel {
 					display.setText("");
 					equal=false;
 				}
-				display.setText(display.getText() + nowButton);
+				
+				if(nowButton.equals("x!"))
+					display.setText(display.getText() + "fact(x)");
+				else
+					display.setText(display.getText() + nowButton);
 				//display3.setText(display3.getText() + nowButton);
 			}
 
@@ -231,48 +236,53 @@ class myPanel extends JPanel {
 	}
 
 	public void addbuttons(ActionListener command){
-		addButton1("sin(x)", command);
-		addButton1("cos(x)", command);
-		addButton1("tan(x)", command);
-		addButton1("10^x", command);
-		addButton1("ln(x)", command);
-		addButton1("e^x", command);
-		addButton1("mad", command);
-		addButton1("sinh(x)", command);
-		addButton1("x^y", command);
-		addButton1("fact(x)", command);
-		addButton1("Rad/Deg",command);
-		addButton1("TF mode",command);
-
-		addButton1("7", command);
-		addButton1("8", command);
-		addButton1("9", command);
-		addButton1("+",command);
-
-
-		addButton1("4", command);
-		addButton1("5", command);
-		addButton1("6", command);
-		addButton1("-", command);
+		addButton1("sin(x)", command,panel2);
+		addButton1("cos(x)", command,panel2);
+		addButton1("tan(x)", command,panel2);
+		addButton1("10^x", command,panel2);
+		addButton1("ln(x)", command,panel2);
+		addButton1("e^x", command,panel2);
+		addButton1("MAD", command,panel2);
+		addButton1("sinh(x)", command,panel2);
+		addButton1("x^y", command,panel2);
+		
+		addButton1("( )", command,panel2);
+		addButton1("\u221A",command,panel2);
+		addButton1("x!", command,panel2);
+		
+		addButton1("7", command,panel2);
+		addButton1("8", command,panel2);
+		addButton1("9", command,panel2);
+		addButton1("+",command,panel2);
 
 
-		addButton1("1", command);
-		addButton1("2", command);
-		addButton1("3", command);
-		addButton1("*", command);
+		addButton1("4", command,panel2);
+		addButton1("5", command,panel2);
+		addButton1("6", command,panel2);
+		addButton1("-", command,panel2);
 
 
-		addButton1("C", command);
-		addButton1("0", command);
-		addButton1(".", command);
-		addButton1("/", command);
+		addButton1("1", command,panel2);
+		addButton1("2", command,panel2);
+		addButton1("3", command,panel2);
+		addButton1("*", command,panel2);
 
+		addButton1("C", command,panel2);
+		addButton1("0", command,panel2);
+		addButton1(".", command,panel2);
+		addButton1("/", command,panel2);
 
-		addButton1("\u221A",command);
-		addButton1("\u03c0", command);
-		addButton1("=", command);
-		addButton1("Result",command);
+		
+		
+		addButton1("\u03c0", command,panel2);
+		addButton1(",", command,panel2);
+		addButton1("=", command,panel2);
+		addButton1("Result",command,panel2);
 
+		addButton1("Rad/Deg",command,panel3);
+		addButton1("TF mode",command,panel3);
+		addButton1("0.0+", command,panel3);
+		addButton1("0.0-", command,panel3);
 	}
 
 	public void getresult(){

@@ -12,7 +12,7 @@ public class Tan {
 		return Sin.sin(x)/Cos.cos(x);
 	}
 	
-	public static double tanforR(double x){
+	public static double tanforR(double x) throws Exception{
 		return Sin.sinforR(x)/Cos.cosforR(x);
 	}
 	

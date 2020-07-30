@@ -53,8 +53,9 @@ public class Sin {
 	 * 
 	 * @param x
 	 * @return result
+	 * @throws Exception 
 	 */
-	public static double sinforR(double x) {
+	public static double sinforR(double x) throws Exception {
 
 		double result = 0;
 		double input;

@@ -12,7 +12,7 @@ public class Cos {
 		return Sin.sin(90-x);
 	}
 	
-	public static double cosforR(double x){
+	public static double cosforR(double x) throws Exception{
 		return Sin.sinforR(BuiltInFunctionImplementation.PI/2-x);
 	}
 	
