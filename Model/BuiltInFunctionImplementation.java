@@ -4,9 +4,7 @@
  * This class implements all the built-in functions we need in the Math library
  */
 
-package project;
-
-import TFs.Ln;
+package Model;
 
 public class BuiltInFunctionImplementation {
 	
@@ -120,7 +118,7 @@ public class BuiltInFunctionImplementation {
 	public static double taylor_expand(double a, double x) throws Exception {
 		double result = 1;
 		for (int i = 1; i < maxIterations; i++) {
-			result += TFs.XtoN.Xton(x * Ln.ln2(a), i) / factorial(i);
+			result += Model.XtoN.Xton(x * Ln.ln2(a), i) / factorial(i);
 		}
 		return result;
 	}

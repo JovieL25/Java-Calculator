@@ -1,4 +1,4 @@
-package Interfaces;
+package View;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,8 +23,8 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.plaf.ToolTipUI;
 
-import project.Shunting_yard_algorithm;
-import project.memory_node;
+import Controller.Shunting_yard_algorithm;
+import Model.memory_node;
 
 import javax.swing.JOptionPane;
 
@@ -63,7 +64,7 @@ class myPanel extends JPanel {
 	boolean equal = false,TF = false;
 	ArrayList<memory_node> history = new ArrayList<memory_node>(10);
 	ArrayList<JButton> Buttons = new ArrayList<JButton>();
-	String[] TFs = {"sin(x)","10^x","ln(x)","e^x",
+	String[] TFs = {"sin(x)","10^x","ln(x)","e^(x)",
 			"MAD","sinh(x)","x^y","cos(x)","tan(x)"};
 
 	public myPanel(myFrame parent) {
@@ -125,6 +126,8 @@ class myPanel extends JPanel {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					getresult();
 				}
+				else
+					System.out.println(e.getKeyCode());
 			}
 
 			@Override
@@ -210,8 +213,13 @@ class myPanel extends JPanel {
 				display.setText(display.getText() + "pi");
 			else if (nowButton != "=") {
 				if(equal){
+					if(Pattern.compile("[-+*/()^]").matcher(nowButton).find()){
+						display.setText("ANS"+memory_node.current_head);
+					}
+					else{
+						display.setText("");
+					}
 					display3.setText("");
-					display.setText("");
 					equal=false;
 				}
 				
@@ -241,7 +249,7 @@ class myPanel extends JPanel {
 		addButton1("tan(x)", command,panel2);
 		addButton1("10^x", command,panel2);
 		addButton1("ln(x)", command,panel2);
-		addButton1("e^x", command,panel2);
+		addButton1("e^(x)", command,panel2);
 		addButton1("MAD", command,panel2);
 		addButton1("sinh(x)", command,panel2);
 		addButton1("x^y", command,panel2);
@@ -272,8 +280,6 @@ class myPanel extends JPanel {
 		addButton1(".", command,panel2);
 		addButton1("/", command,panel2);
 
-		
-		
 		addButton1("\u03c0", command,panel2);
 		addButton1(",", command,panel2);
 		addButton1("=", command,panel2);
@@ -292,7 +298,7 @@ class myPanel extends JPanel {
 		try {
 			if(userinput.contains("ANS")) {
 				for(int i = 10;i>0;i--) {
-					filtered=userinput.replace("ANS"+i, Double.toString(history.get(i-1).getResult()));
+					filtered=filtered.replace("ANS"+i, Double.toString(history.get(i-1).getResult()));
 				}
 			}
 			filtered=filtered.replace("e^", "EXP");

@@ -1,6 +1,4 @@
-package TFs;
-
-import project.BuiltInFunctionImplementation;
+package Model;
 
 public class XtoN {
 	

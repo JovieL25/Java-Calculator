@@ -1,5 +1,5 @@
 
-package TFs;
+package Model;
 /*
  * This class implements the transcendental function, tan(x) function
  * @version clean_code branch July 2020

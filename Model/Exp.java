@@ -1,7 +1,5 @@
 
-package TFs;
-
-import project.BuiltInFunctionImplementation;
+package Model;
 
 /*
  * This class implements the transcendental function, exponential function 
@@ -14,7 +12,7 @@ public class Exp {
 	 * exSum stores the exponential result for each calculation
 	 * need to be reset to 1 after each completion
 	 */
-	protected static double exSum = 1;
+	public static double exSum = 1;
 	
 	/*
 	 * Function 4: e^x

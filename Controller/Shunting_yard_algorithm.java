@@ -1,20 +1,20 @@
-package project;
+package Controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.regex.Pattern;
 
-import Interfaces.SimpleCalculatorInterface;
-import TFs.Cos;
-import TFs.Exp;
-import TFs.Ln;
-import TFs.Mean_absolute_deviation;
-import TFs.Sin;
-import TFs.Sinh;
-import TFs.Tan;
-import TFs.XtoN;
+import Model.BuiltInFunctionImplementation;
+import Model.Cos;
+import Model.Exp;
+import Model.Ln;
+import Model.Mean_absolute_deviation;
+import Model.Sin;
+import Model.Sinh;
+import Model.Tan;
+import Model.XtoN;
+import View.SimpleCalculatorInterface;
 
 /*
  * This class implements the math expression parser and evaluation algorithm
@@ -25,6 +25,7 @@ public class Shunting_yard_algorithm {
 	
 	/**"operators" array stores possible operators and their precedence level same as their index*/
 	public static String[] operators = {"+-","*/","^"};
+	private static String[] TFs = {"sin","ln","e^","mad","sinh","cos","tan"};
 
 	/**
 	 * isoperator function determines if a token is operators
@@ -75,6 +76,8 @@ public class Shunting_yard_algorithm {
 		String filtered = expression.replace(" ", "");
 		filtered = filtered.toLowerCase();
 		filtered = filtered.replace("pi", Double.toString(BuiltInFunctionImplementation.PI));
+		System.out.println(filtered);
+		parenthesis_check(filtered);
 		String head="";
 		boolean last_number=false;
 		boolean last_operator=false;
@@ -89,7 +92,7 @@ public class Shunting_yard_algorithm {
 			//System.out.println(number_stack);
 			//System.out.println(operation_stack);
 			//Get current character
-			head = filtered.substring(i, i+1);
+			head = filtered.substring(i, i + 1);
 			if(head.contains(",")){
 				if(last_number) {
 					number_stack.add(temp);
@@ -240,6 +243,24 @@ public class Shunting_yard_algorithm {
 				}
 				else {
 					if(isfunction(head) && !temp.equals("") && !isfunction(temp)) {
+						int operation_index=operation_stack.size()-1;
+						String operator_head="";
+						if(operation_index>-1)
+							operator_head = operation_stack.get(operation_index);
+
+						while(operation_index>-1 && (isoperator(operator_head) && isoperator(temp))
+								&& !operator_head.contains("(") && !temp.contains("^")) {
+							if(determine_precedence(operator_head,temp)>=0) {
+								number_stack.add(operator_head);
+								operation_stack.remove(operation_index);
+							}
+							else {
+								break;
+							}
+							if(operation_index==0)
+								break;
+							operator_head=operation_stack.get(--operation_index);
+						}
 						operation_stack.add(temp);
 						temp = head;
 					}
@@ -331,6 +352,7 @@ public class Shunting_yard_algorithm {
 				case "exp":
 					temp1 = processing_stack.pop();
 					processing_stack.push(Exp.EXP(temp1, 1));
+					Model.Exp.exSum=1;
 					break;
 				case "cos":
 					temp1 = processing_stack.pop();
@@ -363,5 +385,12 @@ public class Shunting_yard_algorithm {
 			}
 		}
 		return processing_stack.pop();
+	}
+
+	private static void parenthesis_check(String a) throws Exception{
+		for(String c:TFs){
+			if(a.contains(c) && a.charAt(a.indexOf(c)+c.length())!='(')
+				throw new Exception("Function must followed by parenthesis");
+		}
 	}
 }

@@ -1,19 +1,19 @@
 
-package Interfaces;
+package View;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import TFs.Exp;
-import TFs.Ln;
-import TFs.Mean_absolute_deviation;
-import TFs.Sin;
-import TFs.Sinh;
-import TFs.XtoN;
-import project.Shunting_yard_algorithm;
-import project.memory_node;
+import Controller.Shunting_yard_algorithm;
+import Model.Exp;
+import Model.Ln;
+import Model.Mean_absolute_deviation;
+import Model.Sin;
+import Model.Sinh;
+import Model.XtoN;
+import Model.memory_node;
 
 /*
  * This class implements the interface functionality of the "eternity"
@@ -62,8 +62,12 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					if(rad)
-						// replace with calculator function
-						System.out.println(Sin.sinforR(x));
+						try {
+							System.out.println(Sin.sinforR(x));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					else
 						System.out.println(Sin.sin(x));
 
@@ -80,7 +84,12 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(XtoN.Xton(10, x));
+					try {
+						System.out.println(XtoN.Xton(10, x));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -94,7 +103,12 @@ public class CalculatorInterface {
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
-					System.out.println(Ln.ln(x));
+					try {
+						System.out.println(Ln.ln(x));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -161,7 +175,12 @@ public class CalculatorInterface {
 					System.out.print("Enter value of y: ");
 					int y = sc.nextInt();
 					// replace with calculator function
-					System.out.println(XtoN.Xton(x, y));
+					try {
+						System.out.println(XtoN.Xton(x, y));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();

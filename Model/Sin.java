@@ -1,7 +1,5 @@
 
-package TFs;
-
-import project.BuiltInFunctionImplementation;
+package Model;
 
 /*
  * This class implements the transcendental function, sin(x) function

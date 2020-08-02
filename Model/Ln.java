@@ -1,6 +1,4 @@
-package TFs;
-
-import project.BuiltInFunctionImplementation;
+package Model;
 
 /*
  * This class implements the transcendental function, ln(x) function 

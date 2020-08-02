@@ -1,4 +1,4 @@
-package project;
+package Model;
 
 /*
  * This class implements the data structure of math expression history log
