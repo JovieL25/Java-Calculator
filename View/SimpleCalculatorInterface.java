@@ -44,6 +44,7 @@ public class SimpleCalculatorInterface {
 		frame.setPreferredSize(new Dimension(1600,1600));
 		frame.setVisible(true);
 	}
+
 }
 
 class myFrame extends JFrame {
@@ -70,7 +71,6 @@ class myPanel extends JPanel {
 	public myPanel(myFrame parent) {
 		panel3 = new JPanel();
 		panel3.setLayout(new GridLayout(0, 5));
-
 
 		for(int i = 0;i<10;i++) {
 			history.add(new memory_node());
@@ -126,8 +126,21 @@ class myPanel extends JPanel {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					getresult();
 				}
-				else
-					System.out.println(e.getKeyCode());
+				else{
+					char a = e.getKeyChar();
+					if(equal){
+						if((a=='+' || a=='-' || a=='*' || a=='/' || a=='^')){
+							display.setText("ANS"+memory_node.current_head);
+							equal=false;
+						}
+						else if(Character.isDigit(a) || Character.isAlphabetic(a)){
+							display.setText("");
+							equal=false;
+						}
+					}
+					
+				}
+					
 			}
 
 			@Override
@@ -164,7 +177,6 @@ class myPanel extends JPanel {
 
 	}
 	
-
 	//event listener
 	class commandAction implements ActionListener {
 		@Override
