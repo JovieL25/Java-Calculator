@@ -25,7 +25,7 @@ public class Shunting_yard_algorithm {
 	
 	/**"operators" array stores possible operators and their precedence level same as their index*/
 	public static String[] operators = {"+-","*/","^"};
-	private static String[] TFs = {"sin","ln","e^","mad","sinh","cos","tan"};
+	private static String[] TFs = {"sin","ln","exp","mad","sinh","cos","tan"};
 
 	/**
 	 * isoperator function determines if a token is operators
