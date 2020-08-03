@@ -1,10 +1,10 @@
-package project.testCases;
+package testCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import project.CalculatorFunctions;
+import Model.Mean_absolute_deviation;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -50,7 +50,7 @@ class MADTest {
 			double temp = Double.valueOf(str[i]);
 			list.add(temp);
 		}
-		assertEquals(meanAbsDevtion(list, list.size()), CalculatorFunctions.MAD(s), 0.00001);
+		assertEquals(meanAbsDevtion(list, list.size()), Mean_absolute_deviation.MAD(s), 0.00001);
 	}
 
 }
