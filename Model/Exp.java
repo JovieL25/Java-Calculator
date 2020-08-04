@@ -1,11 +1,10 @@
-
-package Model;
-
 /*
  * This class implements the transcendental function, exponential function 
  * @version clean_code branch July 2020
  * @author Yilu Liang
  */
+package Model;
+
 public class Exp {
 	
 	/**
@@ -28,7 +27,7 @@ public class Exp {
 			return Double.POSITIVE_INFINITY;
 		if (n > 150) // n=150, xMAX = 113
 			return exSum;
-		exSum += BuiltInFunctionImplementation.XtoN(x, n) / BuiltInFunctionImplementation.factorial(n);
+		exSum += BuiltInFunctions.XtoN(x, n) / BuiltInFunctions.factorial(n);
 		return EXP(x, n + 1); // n factorial
 	}
 }

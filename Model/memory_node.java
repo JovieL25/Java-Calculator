@@ -1,10 +1,10 @@
-package Model;
-
 /*
  * This class implements the data structure of math expression history log
  * @version clean_code branch July 2020
  * @author Jingyi Lin
  */
+package Model;
+
 public class memory_node {
 	/**expression stores the historical user's input math expression*/
 	private String expression;

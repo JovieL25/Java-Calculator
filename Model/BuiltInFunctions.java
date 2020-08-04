@@ -6,7 +6,7 @@
 
 package Model;
 
-public class BuiltInFunctionImplementation {
+public class BuiltInFunctions {
 	
 	public static int maxIterations = 200;
 	public static final double e = getE();
@@ -31,7 +31,7 @@ public class BuiltInFunctionImplementation {
 	public static double getE(){
 		double e = 1 + 1.0 / 1000000;
 		try {
-			return BuiltInFunctionImplementation.XtoN(e, 1000000);
+			return BuiltInFunctions.XtoN(e, 1000000);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			System.out.println("Cannot get E");
@@ -146,21 +146,21 @@ public class BuiltInFunctionImplementation {
 			// at ln(0)
 			
 			for (int i = 1; i < maxIterations; i++) {
-				output += BuiltInFunctionImplementation.XtoN(-1, (i + 1) % 2) * curValue / i;
+				output += BuiltInFunctions.XtoN(-1, (i + 1) % 2) * curValue / i;
 				curValue *= x - 1;
 			}
 		} else if (x == 1) {
 			output = 0;
 		} else if (x > 1) {
 			//Return 1 if x is very close to e
-			if (BuiltInFunctionImplementation.abs(x - e) <= accuracy) {
+			if (BuiltInFunctions.abs(x - e) <= accuracy) {
 				return 1;
 			}
 			// Converge the Taylor series until we hit our desired accuracy or we hit a max
 			// number of iterations
 			double base = (x - 1) / x;
 			for (int i = 1; i < maxIterations; i++) {
-				output += BuiltInFunctionImplementation.XtoN(base, i) / i;
+				output += BuiltInFunctions.XtoN(base, i) / i;
 			}
 		}
 		return output;

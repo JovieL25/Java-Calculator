@@ -1,6 +1,10 @@
+/*
+ * This class implements the interface functionality of the "eternity"
+ * @version clean_code branch July 2020
+ * @author Derek Liu, Jingyi Lin
+ */
 
 package View;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
@@ -15,11 +19,6 @@ import Model.Sinh;
 import Model.XtoN;
 import Model.memory_node;
 
-/*
- * This class implements the interface functionality of the "eternity"
- * @version clean_code branch July 2020
- * @author Derek Liu, Jingyi Lin
- */
 public class CalculatorInterface {
 	/** 
 	 * "history" is an array list which keeps track 
@@ -221,10 +220,11 @@ public class CalculatorInterface {
 							try {
 								if(userinput.contains("ANS")) {
 									for(int i = 10;i>0;i--) {
-										userinput=userinput.replace("ANS"+i, Double.toString(history.get(i-1).getResult()));
+										userinput=userinput.replace("ANS"+i, 
+												Double.toString(history.get(i-1).getResult()));
 									}
 								}
-								result = Shunting_yard_algorithm.shunting_yard_algorithm(userinput);
+								result = Shunting_yard_algorithm.shunting_yard_algorithm_parse(userinput);
 								if(memory_node.current_head<10) {
 									history.get(memory_node.current_head).setExpression(userinput);
 									history.get(memory_node.current_head).setResult(result);
