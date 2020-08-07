@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-
 package Model;
-=======
->>>>>>> master
+
 /*
  * This class implements the transcendental function, tan(x) function
  * @version clean_code branch July 2020
  * @author Jingyi Lin
  */
-<<<<<<< HEAD
-=======
-package Model;
->>>>>>> master
 
 public class Tan {
 	
