@@ -67,7 +67,7 @@ public class Sin {
 			
 			input = x %(2*BuiltInFunctions.PI);
 
-		for (int i = 0; i <= 20; i++) {
+		for (int i = 0; i <= BuiltInFunctions.precise; i++) {
 			fac = BuiltInFunctions.factorial(2*i+1);
 			result += BuiltInFunctions.posPow(-1.0, i)
 					* BuiltInFunctions.posPow(input, 2 * i + 1) / fac;
