@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 
 package Model;
 
+=======
+>>>>>>> master
 /*
  * This class implements the transcendental function, sinh(x) function
  * @version clean_code branch July 2020
  * @author Ziqian
  */
+<<<<<<< HEAD
+=======
+package Model;
+
+>>>>>>> master
 public class Sinh {
 
 	/**
@@ -19,7 +27,11 @@ public class Sinh {
 	public static double sinh(double num, boolean isNumDegree) {
 		/* Degree to Radian */
 		if (isNumDegree) {
+<<<<<<< HEAD
 			num = num * BuiltInFunctionImplementation.PI / 180;
+=======
+			num = num * BuiltInFunctions.PI / 180;
+>>>>>>> master
 		}
 
 		double sum = num;
@@ -27,7 +39,11 @@ public class Sinh {
 
 		/* Compute until the value of step is smaller than 9 decimal places */
 		int k = 2;
+<<<<<<< HEAD
 		while (Double.compare(step >= 0 ? step : step * (-1), BuiltInFunctionImplementation.accuracy) > 0) {
+=======
+		while (Double.compare(step >= 0 ? step : step * (-1), BuiltInFunctions.accuracy) > 0) {
+>>>>>>> master
 			step = step * num * num / (k * (k + 1));
 			sum += step;
 

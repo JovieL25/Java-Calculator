@@ -14,8 +14,13 @@ public class XtoN {
 		 * if n is an integer, we can iterate to get the result if n is a rational
 		 * number, we have to use the taylor expansion
 		 */
+<<<<<<< HEAD
 		if (BuiltInFunctionImplementation.isRational(n)) {
 			return BuiltInFunctionImplementation.taylor_expand(x, n);
+=======
+		if (BuiltInFunctions.isRational(n)) {
+			return BuiltInFunctions.taylor_expand(x, n);
+>>>>>>> master
 		} else if (n < 0)
 			return Xton(1 / x, -n);
 		else if (n == 0) {
@@ -48,7 +53,11 @@ public class XtoN {
 			if(test < 0) {
 				x = 1/x;
 			}
+<<<<<<< HEAD
 			for(int i = 0; i < BuiltInFunctionImplementation.abs(y); i++) {
+=======
+			for(int i = 0; i < BuiltInFunctions.abs(y); i++) {
+>>>>>>> master
 				result = result * x;
 			}
 			return result;
@@ -78,7 +87,11 @@ public class XtoN {
 				{
 					double result = 0.0;
 					//calculate y * ln(x)
+<<<<<<< HEAD
 					double temp = y * BuiltInFunctionImplementation.ln(x);
+=======
+					double temp = y * BuiltInFunctions.ln(x);
+>>>>>>> master
 					try {
 						result = Exp.EXP(temp,1);
 					} catch (Exception e) {

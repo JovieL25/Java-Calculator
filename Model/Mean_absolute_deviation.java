@@ -1,13 +1,22 @@
+<<<<<<< HEAD
 
 
 package Model;
 import java.util.ArrayList;
 
+=======
+>>>>>>> master
 /*
  * This class implements the transcendental function,MAD function
  * @version clean_code branch July 2020
  * @author Xuan
  */
+<<<<<<< HEAD
+=======
+package Model;
+import java.util.ArrayList;
+
+>>>>>>> master
 public class Mean_absolute_deviation {
 
 	/*
@@ -46,7 +55,11 @@ public class Mean_absolute_deviation {
 		else {
 			double avg =  total / counter;
 			for (int i = 0; i < list.size(); i++) {
+<<<<<<< HEAD
 				difInTotal += BuiltInFunctionImplementation.abs(list.get(i) - avg);
+=======
+				difInTotal += BuiltInFunctions.abs(list.get(i) - avg);
+>>>>>>> master
 			}
 			result = difInTotal / counter;
 		}

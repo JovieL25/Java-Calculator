@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 public class CalculatorInterface {
 
 	public static void main(String[] args) {
-		System.out.println(CalculatorFunctions.EXP(1, 1));
-		System.out.println(Math.pow(Math.E, 2));
 		int mainMenuInput = -1;
 		Scanner sc = new Scanner(System.in);
 		while (mainMenuInput != 0) {
@@ -33,7 +31,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.sinforR(x));
+					System.out.println(Sin.sinforR(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -62,7 +60,7 @@ public class CalculatorInterface {
 				while (keepGoing) {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
-					System.out.println(CalculatorFunctions.ln(x));
+					System.out.println(Ln.ln(x));
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -76,7 +74,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.EXP(x, 1));
+					System.out.println(Exp.EXP(x, 1));
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
 					if (userInput.equals("n")) {
@@ -90,7 +88,7 @@ public class CalculatorInterface {
 					System.out.print("Enter the values, use \",\" to separate: ");
 					String x = sc.next();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.MAD(x));
+					System.out.println(Mean_absolute_deviation.MAD(x));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -105,7 +103,7 @@ public class CalculatorInterface {
 					System.out.print("Enter value of x: ");
 					double x = sc.nextDouble();
 					// replace with calculator function
-					System.out.println(CalculatorFunctions.sinh(x, false));
+					System.out.println(Sinh.sinh(x, false));
 
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -142,7 +140,7 @@ public class CalculatorInterface {
 					if (userinput.contains("quit")) {
 						keepGoing = false;
 					} else
-						command_parser(userinput);
+						Shunting_yard_algorithm.shunting_yard_algorithm(userinput);
 					
 					System.out.print("\nContinue? (y/n)");
 					String userInput = sc.next();
@@ -158,6 +156,27 @@ public class CalculatorInterface {
 		sc.close();
 	}
 
+	public static boolean isnumber(String a) {
+		return a.matches("-?\\d+(\\.\\d+)?");
+	}
+	public static void shunting_yard_algorithm(String expression){
+		String filtered = expression.replace(" ", "");
+		String head="";
+		int index=0;
+		ArrayList<String> number_stack = new ArrayList<String>();
+		ArrayList<String> operation_stack = new ArrayList<String>();
+		for(int i =0;i<filtered.length();i++) {
+			head = filtered.substring(i, i+1);
+			if(head.equals(".") || isnumber(head)) {
+				number_stack.add(number_stack.get(i++)+head);
+			}
+			else
+				operation_stack.add(head);
+		}
+		
+		
+	}
+	
 	/**
 	 * method command_parser will filter user's command, then first use
 	 * process_paren to process the items in parentheses finally get the result by
