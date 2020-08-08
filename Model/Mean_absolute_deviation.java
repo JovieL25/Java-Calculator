@@ -1,11 +1,11 @@
+package Model;
+import java.util.ArrayList;
+
 /*
  * This class implements the transcendental function,MAD function
  * @version clean_code branch July 2020
  * @author Xuan
  */
-package Model;
-import java.util.ArrayList;
-
 public class Mean_absolute_deviation {
 
 	/*
