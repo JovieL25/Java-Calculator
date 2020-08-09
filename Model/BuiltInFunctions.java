@@ -14,6 +14,16 @@ public class BuiltInFunctions {
 	public static final double accuracy = 0.00001; // The accuracy for ln()
 	public static final int precise = 10; // maxIterations for sin(x)
 	
+	// Newton's method for square root
+	public static double sqrt(double x){
+		double x_iteration = 10;
+		for (int i = 0;i<1000;i++){
+			x_iteration=x_iteration-(x_iteration*x_iteration-x)/(2*x_iteration);
+		}
+		return x_iteration;
+		
+	}
+	
 	// nilakantha series for pi
 	public static double getPi() {
 		double pi = 3;
@@ -47,7 +57,7 @@ public class BuiltInFunctions {
 	 * */
 	public static double abs(double arg) {
 		double output = arg;
-		if(arg < 0) {
+		if (arg < 0) {
 			return -output;
 		}
 		return output;
@@ -61,14 +71,14 @@ public class BuiltInFunctions {
 	 * @return the factorial result
 	 * */
 	public static double factorial(int x) throws Exception{
-		if(x > 0) {
+		if (x > 0) {
 			double result = 1;
-			for(int i = 1; i <= x; i++) {
+			for (int i = 1; i <= x; i++) {
 				result = result * i;
 			}
 			return result;
 		}
-		if(x == 0) {
+		if (x == 0) {
 			return 1.0;
 		}
 		
@@ -83,14 +93,14 @@ public class BuiltInFunctions {
 	 * @result a power result
 	 * */
 	public static double posPow(double x, double p) {
-		if(p == 0) {
+		if (p == 0) {
 			return 1.0;
 		}
-		if(p < 0) {
+		if (p < 0) {
 			return 0.9999999999;//for now the number represents N/A
 		}
 		double result = 1.0;
-		for(int i = 0; i < p; i++) {
+		for (int i = 0; i < p; i++) {
 			result = result * x;
 		}
 		return result;
@@ -179,8 +189,10 @@ public class BuiltInFunctions {
 		 */
 		if (isRational(n)) {
 			return taylor_expand(x, n);
-		} else if (n < 0)
+		} else if (n < 0){
+			System.out.println(n%2==0);
 			return XtoN(1 / x, -n);
+		}
 		else if (n == 0) {
 			return 1;	
 		}

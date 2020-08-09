@@ -26,13 +26,6 @@ public class Sin {
 		else
 			input = (x*BuiltInFunctions.PI / 180)%(2*BuiltInFunctions.PI);
 		
-		if ((30*BuiltInFunctions.PI/180)% input== 0 
-				||(150*BuiltInFunctions.PI/180)%input== 0) // avoid some small inaccuracy
-			return result = 0.5;
-		
-		if ( (210*BuiltInFunctions.PI/180)% input== 0 
-				||(330*BuiltInFunctions.PI/180)% input== 0)
-			return result = -0.5;
 
 		for (int i = 0; i <= BuiltInFunctions.precise; i++) {
 			fac = 1;
