@@ -1,10 +1,10 @@
+package Model;
+
 /*
  * This class implements the transcendental function, sinh(x) function
  * @version clean_code branch July 2020
  * @author Ziqian
  */
-package Model;
-
 public class Sinh {
 
 	/**
@@ -26,6 +26,7 @@ public class Sinh {
 
 		/* Compute until the value of step is smaller than 9 decimal places */
 		int k = 2;
+
 		while (Double.compare(step >= 0 ? step : step * (-1), BuiltInFunctions.accuracy) > 0) {
 			step = step * num * num / (k * (k + 1));
 			sum += step;
