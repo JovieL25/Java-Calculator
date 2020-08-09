@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.plaf.ToolTipUI;
+import javax.swing.text.BadLocationException;
 
 import Controller.Shunting_yard_algorithm;
 import Model.memory_node;
@@ -190,7 +191,14 @@ class myPanel extends JPanel {
 
 			else if (Last_pressed_button.equals("\u03c0"))							/*Special case for pi button*/
 				Input_textfield.setText(Input_textfield.getText() + "pi");
-
+			else if (Last_pressed_button.equals("DEL")){
+				try {
+					Input_textfield.setText(Input_textfield.getText(0, Input_textfield.getText().length()-1));
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			else if (Last_pressed_button != "=") {
 
 				if (equal_button_pressed){
