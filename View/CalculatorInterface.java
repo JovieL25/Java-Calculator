@@ -224,7 +224,9 @@ public class CalculatorInterface {
 												Double.toString(history.get(i-1).getResult()));
 									}
 								}
+								
 								result = Shunting_yard_algorithm.shunting_yard_algorithm_parse(userinput);
+								
 								if(memory_node.current_head<10) {
 									history.get(memory_node.current_head).setExpression(userinput);
 									history.get(memory_node.current_head).setResult(result);

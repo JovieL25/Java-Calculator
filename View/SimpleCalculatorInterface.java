@@ -61,8 +61,10 @@ class myFrame extends JFrame {
  *
  */
 class myPanel extends JPanel {
+	
 	JTextField Input_textfield;			//Input_textfield for user's entered equation
 	JTextField Mode_textfield;          //output_textfield  
+	
 	//displaying Radius or Degree mode for Sin,Cos,Tan functions
 	JTextField Result_textfield; 		//Result_textfield displaying result of an entered equation
 
@@ -70,8 +72,10 @@ class myPanel extends JPanel {
 
 	//panel_north contains calculator modes buttons and help button
 	JPanel panel_north;
+	
 	//panel_center contains input and output Textfield
 	JPanel panel_center;
+	
 	//panel_south contains input buttons, 1-9, operators and TF functions
 	JPanel panel_south;
 
@@ -110,44 +114,52 @@ class myPanel extends JPanel {
 			//String variable store event's label(Button's label)
 			Last_pressed_button = event.getActionCommand();
 
-			if(Last_pressed_button.equals("Rad/Deg")){
+			if (Last_pressed_button.equals("Rad/Deg")){
 				//Changing calculator's calculation mode for sin,cos, and other functions
 				SimpleCalculatorInterface.rad_mode=!SimpleCalculatorInterface.rad_mode;
 
 				//Change text in GUI
-				if(SimpleCalculatorInterface.rad_mode)
+				if (SimpleCalculatorInterface.rad_mode)
 					Mode_textfield.setText("Radius mode");
 				else
 					Mode_textfield.setText("Degree mode");
 			}
-			else if(Last_pressed_button.equals("Result")){
+			else if (Last_pressed_button.equals("ANS")){
+				if(equal_button_pressed){
+					Input_textfield.setText("ANS"+memory_node.current_head);
+					equal_button_pressed=false;
+				}
+				else
+					Input_textfield.setText(Input_textfield.getText()+"ANS"+memory_node.current_head);
+			}
+			else if (Last_pressed_button.equals("History")){
 
 				//We will pop a message dialog containing the history of user inputs.
 				String message = "";
-				for(int i = 0;i<memory_node.current_head;i++) {
+				for (int i = 0;i<memory_node.current_head;i++) {
 					message += "ANS"+(i+1)+"\nExpression: "
 							+history.get(i).getExpression()
 							+"\nResult: "+history.get(i).getResult()+"\n";
 				}
 				JOptionPane.showMessageDialog(null, message);
 			}
-			else if(Last_pressed_button.equals("TF mode")){
+			else if (Last_pressed_button.equals("TF mode")){
 
 				//If TF mode button is pressed, 
 				//we need to hide/show TF buttons depending on the current boolean
 
 				//If currently not displaying TF buttons
-				if(!displaying_TF){
-					for(JButton b:List_Buttons)
+				if (!displaying_TF){
+					for (JButton b:List_Buttons)
 						b.setVisible(true);
 					displaying_TF=true;
 				}
 				else{
 
 					//else TF buttons
-					for(JButton b:List_Buttons){
-						for(String c:TF_labels){
-							if(b.getText().equals(c)){
+					for (JButton b:List_Buttons){
+						for (String c:TF_labels){
+							if (b.getText().equals(c)){
 								b.setVisible(false);
 								break;
 							}
@@ -157,17 +169,15 @@ class myPanel extends JPanel {
 				}
 
 			}
-			else if(Last_pressed_button.equals("Help")){
+			else if (Last_pressed_button.equals("Help")){
 
 				//if "Help" button was pressed
 				JOptionPane.showMessageDialog(null, "Press “Rad/Deg” to shift "
 						+"between radius mode and degree mode."
 						+ "\nPress “TF mode” to enable buttons for transcendental functions."
-
-							+"\nPress “0.0+” and “0.0-” to adjust precision, "
-							+"this functions is currently not available."
-
-							+"\nPress “Result” to see the functions entered "
+						+"\nPress \"ANS\" to use the previous stored answer."
+						
+							+"\nPress “History” to see the equations entered "
 							+"and their result," 
 							+" currently able to see the last 10 inputs."
 
@@ -175,20 +185,20 @@ class myPanel extends JPanel {
 							+"can be directly used for next function, "
 							+"simply carry on the calculation.");
 			}
-			else if(Last_pressed_button.equals("\u221A"))							/*Special case for square root button*/
+			else if (Last_pressed_button.equals("\u221A"))							/*Special case for square root button*/
 				Input_textfield.setText(Input_textfield.getText() + "sqrt(x)");
 
-			else if(Last_pressed_button.equals("\u03c0"))							/*Special case for pi button*/
+			else if (Last_pressed_button.equals("\u03c0"))							/*Special case for pi button*/
 				Input_textfield.setText(Input_textfield.getText() + "pi");
 
 			else if (Last_pressed_button != "=") {
 
-				if(equal_button_pressed){
+				if (equal_button_pressed){
 
 					//If equal button was pressed
 					//And user pressed an operator button
 					//concatenate last stored result with that operator
-					if(Pattern.compile("[-+*/()^]").matcher(Last_pressed_button).find()){
+					if (Pattern.compile("[-+*/()^]").matcher(Last_pressed_button).find()){
 						Input_textfield.setText("ANS"+memory_node.current_head);
 					}
 					else{
@@ -201,7 +211,7 @@ class myPanel extends JPanel {
 					equal_button_pressed=false;
 				}
 
-				if(Last_pressed_button.equals("x!"))							/*Special case for factorial button*/			
+				if (Last_pressed_button.equals("x!"))							/*Special case for factorial button*/			
 					Input_textfield.setText(Input_textfield.getText() + "fact(x)");
 				else
 					Input_textfield.setText(Input_textfield.getText() + Last_pressed_button);
@@ -231,7 +241,7 @@ class myPanel extends JPanel {
 		panel_north.setLayout(new GridLayout(0, 5));
 
 		//Initialize memory object, stores only 10 inputs
-		for(int i = 0;i<10;i++) {
+		for (int i = 0;i<10;i++) {
 			history.add(new memory_node());
 		}
 		setLayout(new BorderLayout());
@@ -284,28 +294,29 @@ class myPanel extends JPanel {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					//Press "Enter" key is similar as pressing "equal" button
 					getresult();
 				}
 				else{
+					
 					//If other keys are pressed
 					char a = e.getKeyChar();
-
+					
 					//If "Equal" button or "Enter" key was pressed before
 					//And user immediately pressed another operator
 					//Use the last stored result concatenate with the operator
-					if(equal_button_pressed){
-						if((a=='+' || a=='-' || a=='*' || a=='/' || a=='^')){
+					if (equal_button_pressed && e.getKeyCode()!=16){
+						if ((a=='+' || a=='-' || a=='*' || a=='/' || a=='^')){
 							Input_textfield.setText("ANS"+memory_node.current_head);
-							equal_button_pressed=false;
 						}
-						else if(Character.isDigit(a) || Character.isAlphabetic(a)){
+						else if (Character.isDigit(a) || Character.isAlphabetic(a)){
 							//Otherwise clear the input textfield and fill in new character
 							Input_textfield.setText("");
-							equal_button_pressed=false;
 						}
+						equal_button_pressed=false;
 					}
+					
 				}
 			}
 
@@ -340,13 +351,13 @@ class myPanel extends JPanel {
 		//If the button belongs to a TF button, set visibility to false
 		JButton button = new JButton(label);
 		button.setPreferredSize(new Dimension(80,40));
-		if(label.equals(""))
+		if (label.equals(""))
 			button.setVisible(false);
 		button.addActionListener(listener);
 		panel.add(button,BorderLayout.LINE_START);
 		List_Buttons.add(button);
-		for(String c : TF_labels){
-			if(label.equals(c)){
+		for (String c : TF_labels){
+			if (label.equals(c)){
 				button.setVisible(false);
 				break;
 			}
@@ -371,9 +382,14 @@ class myPanel extends JPanel {
 		add_one_Button("x^y", command,panel_south);
 
 		add_one_Button("( )", command,panel_south);
+		add_one_Button(",", command,panel_south);
+		add_one_Button(".", command,panel_south);
+		
+		add_one_Button("\u03c0", command,panel_south);
 		add_one_Button("\u221A",command,panel_south);
 		add_one_Button("x!", command,panel_south);
-
+		add_one_Button("DEL",command,panel_south);
+		
 		add_one_Button("7", command,panel_south);
 		add_one_Button("8", command,panel_south);
 		add_one_Button("9", command,panel_south);
@@ -393,20 +409,16 @@ class myPanel extends JPanel {
 
 		add_one_Button("C", command,panel_south);
 		add_one_Button("0", command,panel_south);
-		add_one_Button(".", command,panel_south);
-		add_one_Button("/", command,panel_south);
-
-		add_one_Button("\u03c0", command,panel_south);
-		add_one_Button(",", command,panel_south);
 		add_one_Button("=", command,panel_south);
-		add_one_Button("Result",command,panel_south);
+		add_one_Button("/", command,panel_south);
+		
+		
 
 		add_one_Button("Rad/Deg",command,panel_north);
 		add_one_Button("TF mode",command,panel_north);
-		add_one_Button("0.0+", command,panel_north);
-		add_one_Button("0.0-", command,panel_north);
+		add_one_Button("ANS", command,panel_north);
+		add_one_Button("History", command,panel_north);
 	}
-
 
 	/**
 	 * getresult() function will first filtered the user input by
@@ -426,9 +438,9 @@ class myPanel extends JPanel {
 			//Surrounded with try catch block to handle exceptions
 			//Exceptions can come from all functions executions
 			//or incorrect user input
-			if(userinput.contains("ANS")) {
+			if (userinput.contains("ANS")) {
 				//Replace ANS1-10 to the double value
-				for(int i = 10;i>0;i--) {
+				for (int i = 10;i>0;i--) {
 					filtered=filtered.replace("ANS"+i, 
 							Double.toString(history.get(i-1).getResult()));
 				}
@@ -437,7 +449,7 @@ class myPanel extends JPanel {
 
 			//Parse to controller
 			result = Shunting_yard_algorithm.shunting_yard_algorithm_parse(filtered);
-			if(memory_node.current_head<10) {
+			if (memory_node.current_head<10) {
 				history.get(memory_node.current_head).setExpression(userinput);
 				history.get(memory_node.current_head).setResult(result);
 				memory_node.current_head++;

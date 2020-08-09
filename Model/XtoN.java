@@ -16,8 +16,11 @@ public class XtoN {
 		 */
 		if (BuiltInFunctions.isRational(n)) {
 			return BuiltInFunctions.taylor_expand(x, n);
-		} else if (n < 0)
-			return Xton(1 / x, -n);
+		} else if (n < 0){
+			if(n%2==0)
+				return Xton(1 / (x*x), -n/2);
+			return Xton(1/x,-n);
+		}
 		else if (n == 0) {
 			return 1;	
 		}
