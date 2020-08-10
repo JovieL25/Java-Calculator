@@ -476,13 +476,13 @@ class myPanel extends JPanel {
 		add_one_Button("sinh(x)", command,panel_south);
 		add_one_Button("x^y", command,panel_south);
 
-		add_one_Button("( )", command,panel_south);
-		add_one_Button(",", command,panel_south);
-		add_one_Button(".", command,panel_south);
-		
-		add_one_Button("\u03c0", command,panel_south);
-		add_one_Button("\u221A",command,panel_south);
 		add_one_Button("x!", command,panel_south);
+		add_one_Button("\u03c0", command,panel_south);
+		add_one_Button(",", command,panel_south);
+		
+		add_one_Button("\u221A",command,panel_south);
+		add_one_Button("( )", command,panel_south);
+		add_one_Button(".", command,panel_south);
 		add_one_Button("DEL",command,panel_south);
 		
 		add_one_Button("7", command,panel_south);
