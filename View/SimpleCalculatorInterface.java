@@ -17,12 +17,14 @@ import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Popup;
@@ -43,9 +45,85 @@ public class SimpleCalculatorInterface {
 		myFrame frame = new myFrame();
 		//Add exit flow
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//close the window
-		frame.setPreferredSize(new Dimension(1600,1600));
+		frame.setPreferredSize(new Dimension(2000,2000));
 		frame.setVisible(true);
 	}
+}
+
+class Dialog extends JDialog {
+	
+	private String repeat(String s, int times){
+		if (times <= 0) 
+			return "";
+	    else
+	    	return s + repeat(s, times-1);
+	}
+    private final JScrollPane scrollPane = new JScrollPane();
+    //I added the breaks to the label below to be able to scroll down.
+    
+    //This contains the entire help message
+    //Click on "Help" button to see the message
+    private final JLabel lblContent = new JLabel(
+    		"<html> >>&nbsp;Manual&nbsp;for&nbsp;Eternity&nbsp;Calculator&nbsp;: "
+    		+ "<br><br>>&nbsp;Description&nbsp;:&nbsp;&nbsp;Eternity&nbsp;"
+    		+ "Calculator&nbsp;is&nbsp;a&nbsp;simple&nbsp;calculator&nbsp;that&nbsp; "
+    		+ "<br>"+repeat("&nbsp;",26)+"supports&nbsp;many&nbsp;"
+    		+ "mathematical&nbsp;functions&nbsp; "
+    		+ "<br>"+repeat("&nbsp;",26)+"and&nbsp;transcendental&nbsp;functions "
+    		+ "<br>"+repeat("&nbsp;",26)+"while&nbsp;"
+    		+ "maintaining&nbsp;a&nbsp;simple&nbsp;user&nbsp;interface. "
+    		+ "<br><br> >>&nbsp;Features&nbsp;:&nbsp; "
+    		+ "<br><br>"+repeat("&nbsp;",4)
+    		+ "(1)&nbsp;Support&nbsp;for&nbsp;math&nbsp;equation&nbsp;"
+    		+ "evaluation&nbsp;:&nbsp;2.2^3.6+sin(5)*(10-6) <br> "
+    		+ "<br>"+repeat("&nbsp;",4)+"(2)&nbsp;Memory&nbsp;of&nbsp;10&nbsp;"
+    		+ "previous&nbsp;user&nbsp;input&nbsp;equations&nbsp;and&nbsp;answers <br> "
+    		+ "<br>"+repeat("&nbsp;",4)+"(3)&nbsp;Change&nbsp;radius/degree&nbsp;output&nbsp;mode "
+    		+ "<br><br>"+repeat("&nbsp;",4)
+    		+"(4)&nbsp;Hide/Display&nbsp;transcendental&nbsp;functions "
+    		+ "<br><br>"+repeat("&nbsp;",4)+"(5)&nbsp;Error&nbsp;messages&nbsp;with&nbsp;feedback "
+    		+ "<br><br><br>(1)&nbsp;Supported&nbsp;Functions<br><br>"+repeat("&nbsp;",6)
+    		+ "-Basic&nbsp;arithmetic&nbsp;operations&nbsp;:&nbsp;+-*/ <br><br>"+repeat("&nbsp;",6)
+    		+ "-Sine&nbsp;:&nbsp;sin(x) <br><br>"+repeat("&nbsp;",6)
+    		+ "-Cosine&nbsp;:&nbsp;cos(x) <br><br>"+repeat("&nbsp;",6)
+    		+ "-Tangent&nbsp;:&nbsp;tan(x) <br><br>"+repeat("&nbsp;",6)
+    		+ "-Exponential&nbsp;function&nbsp;:&nbsp;e^x<br><br>"+repeat("&nbsp;",6)
+    		+ "-Linear&nbsp;logarithm&nbsp;:&nbsp;ln(x)<br><br>"+repeat("&nbsp;",6)
+    		+ "-Square&nbsp;root&nbsp;:&nbsp;sqrt(x) <br><br>"+repeat("&nbsp;",6)
+    		+ "-Power&nbsp;function&nbsp;:&nbsp;n^x <br><br>"+repeat("&nbsp;",6)
+    		+ "-Ten&nbsp;to&nbsp;x&nbsp;:&nbsp;10^x <br><br>"+repeat("&nbsp;",6)
+    		+ "-Factorial&nbsp;:&nbsp;fact(x)&nbsp;Where&nbsp;x&nbsp;is&nbsp;an&nbsp;Integer "
+    		+ "<br><br>"+repeat("&nbsp;",6)
+    		+ "-Hyperbolic&nbsp;sine&nbsp;:&nbsp;sinh(x) "
+    		+ "<br><br>"+repeat("&nbsp;",6)
+    		+ "-Mean&nbsp;Absolute&nbsp;Deviation&nbsp;:&nbsp;"
+    		+ "MAD(x1,x2,...,xn) <br><br> <br> "
+    		+ "(2)&nbsp;To&nbsp;use&nbsp;previous&nbsp;answer:<br><br>"+repeat("&nbsp;",10)
+    		+"Click&nbsp;on&nbsp;"
+    		+ "\"ANS\"&nbsp;button&nbsp;on&nbsp;the&nbsp;top<br><br>"+repeat("&nbsp;",10)
+    		+"Answer&nbsp;from&nbsp;the&nbsp;"
+    		+ "most&nbsp;recently&nbsp;calculated&nbsp;function&nbsp;<br><br>"+repeat("&nbsp;",10)
+    		+ "can&nbsp;be&nbsp;directly&nbsp;used&nbsp;"
+    		+ "for&nbsp;next&nbsp;function,&nbsp;simply&nbsp;carry <br><br>"+repeat("&nbsp;",10)
+    		+ "on&nbsp;the&nbsp;calculation<br><br>"+repeat("&nbsp;",5)+"To&nbsp;use&nbsp;"
+    		+ "the&nbsp;other&nbsp;previous&nbsp;answer:<br><br>"+repeat("&nbsp;",10)
+    		+ "Step&nbsp;1.&nbsp;Click&nbsp;on&nbsp;\"Hisotry\"&nbsp;button&nbsp;&nbsp;to&nbsp;see&nbsp;"
+    		+ "which&nbsp;result&nbsp;to&nbsp;retrive.<br><br>"+repeat("&nbsp;",10)
+    		+ "Step&nbsp;2.&nbsp;Combine&nbsp;\"ANS1-10\"&nbsp;with&nbsp;other&nbsp;functions&nbsp;and&nbsp;operations "
+    		+ "<br><br><br>(3)&nbsp;Switch&nbsp;output&nbsp;mode&nbsp;by&nbsp;click&nbsp;on&nbsp;\"Rad/Deg\"&nbsp;button <br> "
+    		+ "<br><br>(4)&nbsp;Click&nbsp;\"TF&nbsp;mode\"&nbsp;button&nbsp;to&nbsp;enable/disable&nbsp;buttons&nbsp;"
+    		+ "for<br><br>"+repeat("&nbsp;",5)+"transcendental&nbsp;functions <br><br> <br> Author&nbsp;:&nbsp; "
+    		+ "<br>"+repeat("&nbsp;",12)+"Written&nbsp;by&nbsp;Jingyi&nbsp;Lin.<br></html>");
+
+    public Dialog() { 
+        setBounds(100, 100, 500, 500);
+        getContentPane().setLayout(new BorderLayout(0, 0));
+
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        scrollPane.setViewportView(lblContent);
+
+    }
 }
 
 class myFrame extends JFrame {
@@ -173,7 +251,12 @@ class myPanel extends JPanel {
 			else if (Last_pressed_button.equals("Help")){
 
 				//if "Help" button was pressed
-				JOptionPane.showMessageDialog(null, "Press “Rad/Deg” to shift "
+				
+				/*
+				JOptionPane.showMessageDialog(null, 
+						">> Manual for Eternity Calculator"
+						+"\n"
+						+"Press “Rad/Deg” to shift "
 						+"between radius mode and degree mode."
 						+ "\nPress “TF mode” to enable buttons for transcendental functions."
 						+"\nPress \"ANS\" to use the previous stored answer."
@@ -185,6 +268,10 @@ class myPanel extends JPanel {
 							+"\nAnswer from the most recently calculated function "
 							+"can be directly used for next function, "
 							+"simply carry on the calculation.");
+				*/
+				Dialog dialog = new Dialog();
+                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                dialog.setVisible(true);
 			}
 			else if (Last_pressed_button.equals("\u221A"))							/*Special case for square root button*/
 				Input_textfield.setText(Input_textfield.getText() + "sqrt(x)");
