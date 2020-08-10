@@ -120,8 +120,8 @@ public class BuiltInFunctions {
 	/**
 	 * method taylor_expand compute and return the taylor expansion of a^x
 	 * 
-	 * @param x the base number
-	 * @param n the exponent number
+	 * @param a the base number
+	 * @param x the exponent number
 	 * @return taylor expansion of the inputs
 	 * @throws Exception 
 	 */

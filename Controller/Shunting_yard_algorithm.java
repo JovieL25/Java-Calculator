@@ -487,6 +487,8 @@ public class Shunting_yard_algorithm {
 					
 				case "fact":
 					temp_token1=processing_stack.pop();
+					if (BuiltInFunctions.isRational(temp_token1))
+						throw new Exception("Factorial input must be integer");
 					processing_stack.push(BuiltInFunctions.factorial((int)temp_token1));
 					break;
 					
