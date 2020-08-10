@@ -1,18 +1,21 @@
-package Model;
-
 /*
  * This class implements the transcendental function, sinh(x) function
  * @version clean_code branch July 2020
  * @author Ziqian
  */
+
+package Model;
+
 public class Sinh {
 
 	/**
 	 * Function 7: sinh
 	 * 
-	 * @param num user's input number
-	 * @param isNumDegree return radius result if isNumDegree is false, 
-	 * else return degree result
+	 * @param num
+	 *            user's input number
+	 * @param isNumDegree
+	 *            return radius result if isNumDegree is false, else return
+	 *            degree result
 	 * @return sum
 	 */
 	public static double sinh(double num, boolean isNumDegree) {
@@ -27,7 +30,8 @@ public class Sinh {
 		/* Compute until the value of step is smaller than 9 decimal places */
 		int k = 2;
 
-		while (Double.compare(step >= 0 ? step : step * (-1), BuiltInFunctions.accuracy) > 0) {
+		while (Double.compare(step >= 0 ? step : step * (-1),
+				BuiltInFunctions.accuracy) > 0) {
 			step = step * num * num / (k * (k + 1));
 			sum += step;
 
@@ -36,6 +40,7 @@ public class Sinh {
 			} else if (sum == Double.NEGATIVE_INFINITY) {
 				throw new ArithmeticException("Negative Infinity");
 			}
+
 			k += 2;
 		}
 

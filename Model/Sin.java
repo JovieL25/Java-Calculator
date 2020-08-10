@@ -1,9 +1,11 @@
-package Model;
 /*
  * This class implements the transcendental function, sin(x) function
  * @version clean_code branch July 2020
  * @author Long Zhen
  */
+
+package Model;
+
 public class Sin {
 
 	/**
@@ -20,11 +22,11 @@ public class Sin {
 		double fac;
 		double input;
 
-		if ((x*BuiltInFunctions.PI/180)%BuiltInFunctions.PI== 0 )
-			 return 0;
-		else
-			input = (x*BuiltInFunctions.PI / 180)%(2*BuiltInFunctions.PI);
-		
+		if ((x * BuiltInFunctions.PI / 180) % BuiltInFunctions.PI == 0) {
+			return 0;
+		} else {
+			input = (x * BuiltInFunctions.PI / 180) % (2 * BuiltInFunctions.PI);
+		}
 
 		for (int i = 0; i <= BuiltInFunctions.precise; i++) {
 			fac = 1;
@@ -44,7 +46,7 @@ public class Sin {
 	 * 
 	 * @param x
 	 * @return result
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static double sinforR(double x) throws Exception {
 
@@ -52,14 +54,14 @@ public class Sin {
 		double input;
 		double fac;
 
-		if (x%BuiltInFunctions.PI== 0 )
-			 input = 0;
-		else
-			
-			input = x %(2*BuiltInFunctions.PI);
+		if (x % BuiltInFunctions.PI == 0) {
+			input = 0;
+		} else {
+			input = x % (2 * BuiltInFunctions.PI);
+		}
 
 		for (int i = 0; i <= BuiltInFunctions.precise; i++) {
-			fac = BuiltInFunctions.factorial(2*i+1);
+			fac = BuiltInFunctions.factorial(2 * i + 1);
 			result += BuiltInFunctions.posPow(-1.0, i)
 					* BuiltInFunctions.posPow(input, 2 * i + 1) / fac;
 		}
