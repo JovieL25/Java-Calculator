@@ -100,6 +100,8 @@ public class Shunting_yard_algorithm {
 		// Replace string "PI" with a double value
 		String filtered_input_string = expression.replace(" ", "");
 		filtered_input_string = filtered_input_string.toLowerCase();
+		filtered_input_string=filtered_input_string.replace
+				("pi", Double.toString(BuiltInFunctions.getPi()));
 		int string_index_begin = 0;
 		int string_index_end = 0;
 		boolean all_check = false;

@@ -25,6 +25,7 @@ import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
 
 import Controller.Shunting_yard_algorithm;
+import Model.BuiltInFunctions;
 import Model.memory_node;
 
 import javax.swing.JOptionPane;
